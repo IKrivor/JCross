@@ -29,10 +29,10 @@
     <div class="menu" layout="row" layout-align="center center">
         <div layout="row" layout-align="center center">
             <md-button-group layout="row" layout-sm="column" layout-align="center center" ng-model="data.navigation">
-                <md-button class="groupX left"  ng-show="actionLeft1"   ng-click="data.navigation='cross'; actionRight1=!actionRight1;  actionLeft1=!actionLeft1;" style="background-color: tomato; color: white;"> Кроссворды</md-button>
-                <md-button class="groupX left"  ng-show="!actionLeft1"  ng-click="data.navigation='cross';" style="background-color: whitesmoke; color: firebrick;"> Кроссворды</md-button>
-                <md-button class="groupX right" ng-show="!actionRight1" ng-click="data.navigation='rules';  actionLeft1=!actionLeft1; actionRight1=!actionRight1;" style="background-color: tomato; color: white;">Правила</md-button>
-                <md-button class="groupX right" ng-show="actionRight1"  ng-click="data.navigation='rules';" style="background-color: whitesmoke; color: firebrick;"> Правила</md-button>
+                <md-button target="content" href="cross.html"  class="groupX left"  ng-show="actionLeft1"   ng-click="actionRight1=!actionRight1;  actionLeft1=!actionLeft1;" style="background-color: tomato; color: white;"> Кроссворды</md-button>
+                <md-button class="groupX left"  ng-show="!actionLeft1"   style="background-color: whitesmoke; color: firebrick;"> Кроссворды</md-button>
+                <md-button target="content" href="rules.html" class="groupX right" ng-show="!actionRight1" ng-click="actionLeft1=!actionLeft1; actionRight1=!actionRight1;" style="background-color: tomato; color: white;">Правила</md-button>
+                <md-button class="groupX right" ng-show="actionRight1"   style="background-color: whitesmoke; color: firebrick;"> Правила</md-button>
             </md-button-group>
         </div>
     </div>
