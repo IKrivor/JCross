@@ -1,0 +1,47 @@
+<html lang="en" ng-app="PaperGenerator">
+<head>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv=content-type content="text/html; charset=utf-8">
+
+</head>
+
+
+<!-- libraries-->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
+
+<script type='text/javascript' src='path/to/jquery.min.js'></script>
+<script type='text/javascript' src='path/to/angular.min.js'></script>
+<script type='text/javascript' src='path/to/ng-infinite-scroll.min.js'></script>
+
+<script src="app.js"></script>
+<script src="controllers/GeneratorCtrl.js"></script>
+
+<div  class="rspace">
+    <div class="rules">
+        <p>Два простых правила для успешного решения японского кроссворда:</p>
+        <ul>
+            <li>Порядок следования чисел: снизу вверх и слева направо. Т.е., если в столбце стоит число 3, а над ним 1, то
+                это значит, что нужно закрасить (где-то) снизу 3 клетки, а выше них 1 клетку в этом столбце. То же относится и к строкам.
+            <li>Между закрашенными клетками обязательно должна присутствовать как минимум одна не закрашенная клетка.</li>
+        </ul>
+        <p>На первом этапе выискиваем те строки и столбцы, в которых количество закрашиваемых клеток будет максимальным.
+            Следующим этапом будет выявление тех строк и столбцов, где количество закрашиваемых клеток будет больше половины всего
+            столбца или строки.</p>
+        <p>В этих строках или столбцах найдём те клетки, которые будут закрашены в любом случае, независимо от того, с какой стороны
+            начинается закрашиваемое поле. После этого уже можно определить те клетки, которые однозначно не будут закрашены.
+            Их необходимо пометить каким-либо значком, например, крестиком или точкой. Дальше в ход идут логические рассуждения, с
+            помощью которых мы и доводим решение кроссворда до конца. В процессе решения кроссворда описанные ходы могут повторяться
+            несколько раз.</p>
+        <p>Как только закрасили какие-либо клетки, число, которое относится к этим клеткам, надо перечеркнуть, чтобы не запутаться
+            (особенно на огромных кроссвордах).</p>
+    </div>
+
+</div>
+
+</html>
