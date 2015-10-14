@@ -24,7 +24,37 @@
 
 <div layout="row" layout-align="center center">
     <div layout="column" style="margin-top: 10mm;">
-        <img src="сетка.png" style="padding-bottom: 5mm;">
+        <div layout="row" layout-align="center end">
+            <canvas id="lh" width="101" height="201"></canvas>
+            <script>
+                var lh = document.getElementById("lh");
+                var cont = lh.getContext("2d");
+
+            </script>
+            <div layout="column" layout-align="center end">
+                <canvas id="th" width = "301" height="61"></canvas>
+                <script>
+                    var th = document.getElementById("th");
+                    var cont = th.getContext("2d");
+
+                </script>
+                <canvas id="ul" width="301" height="201"></canvas>
+                <script>
+                    var ul = document.getElementById("ul");
+                    var context = ul.getContext("2d");
+                    for (var x = 0.5; x < 301; x += 20) {//вертикальные линии
+                        context.moveTo(x, 0);
+                        context.lineTo(x, 200);
+                    }
+                    for (var y = 0.5; y < 201; y += 20) {//горизонтальные линии
+                        context.moveTo(0, y);
+                        context.lineTo(301, y);
+                    }
+                    context.stroke();
+                </script>
+            </div>
+
+        </div>
         <div layout="row" layout-align="space-around center" >
             <img src="иконка.png.png">
             <img src="иконка.png.png">
