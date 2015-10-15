@@ -29,6 +29,19 @@
             <script>
                 var lh = document.getElementById("lh");
                 var conte = lh.getContext("2d");
+                var ulleft = [
+                    [0,0,0,0,4],
+                    [0,0,0,0,6],
+                    [0,1,1,2,2],
+                    [1,1,2,2,2],
+                    [1,1,2,2,2],
+                    [0,3,2,1,2],
+                    [0,0,3,2,4],
+                    [0,0,3,3,3],
+                    [0,0,0,0,11],
+                    [0,0,0,0,15]
+                ];
+                var ullx = 10, ully = 5;
                 for (var x = 0.5; x < 101; x += 20) {//вертикальные линии
                     conte.moveTo(x, 0);
                     conte.lineTo(x, 201);
@@ -38,13 +51,28 @@
                     conte.lineTo(101, y);
                 }
                 conte.stroke();
-                //conte.font = "bold 12px sans-serif";
-                //conte.textBaseline = "top";
-                //conte.fillText(ulleft[0][0], 1, 1);
+                conte.font = "bold 12px sans-serif";
+                conte.textBaseline = "top";
+                var a = 5, b = 5;
+                for (var i = 0; i < ully; i++) {
+                    a = 5 + (20*i);
+                    for (var j = 0; j < ullx; j++) {
+                        b = 5 + (20*j);
+                        if (ulleft[j][i] != 0){
+                            conte.fillText(ulleft[j][i], a, b);
+                        }
+                    }
+                }
             </script>
             <div layout="column" layout-align="center end">
                 <canvas id="th" width = "301" height="61" style="background: #fff3d7;"></canvas>
                 <script>
+                    var ultop = [
+                        [0,0,0,0,0,0,0,0,2,2,0,0,0,0,0],
+                        [3,3,0,0,0,0,0,3,4,2,3,0,3,0,0],
+                        [1,1,8,5,2,7,9,3,2,4,4,9,2,1,1]
+                    ];
+                    var ultx = 3, ulty = 15;
                     var th = document.getElementById("th");
                     var cont = th.getContext("2d");
                     for (var x = 0.5; x < 301; x += 20) {//вертикальные линии
@@ -56,9 +84,33 @@
                         cont.lineTo(301, y);
                     }
                     cont.stroke();
+                    cont.font = "bold 12px sans-serif";
+                    cont.textBaseline = "top";
+                    var a = 5, b = 5;
+                    for (var i = 0; i < ulty; i++) {
+                        a = 5 + (20*i);
+                        for (var j = 0; j < ultx; j++) {
+                            b = 5 + (20*j);
+                            if (ultop[j][i] != 0){
+                                cont.fillText(ultop[j][i], a, b);
+                            }
+                        }
+                    }
                 </script>
                 <canvas id="ul" width="301" height="201" style="background: white;"></canvas>
                 <script>
+                    var ulitka = [
+                        [0,0,0,0,0,0,0,1,1,1,1,0,0,0,0],
+                        [0,0,0,0,0,0,1,1,1,1,1,1,0,0,0],
+                        [1,0,1,0,0,0,1,1,0,0,1,1,0,0,0],
+                        [1,0,1,0,0,1,1,0,1,1,0,1,1,0,0],
+                        [1,0,1,0,0,1,1,0,1,1,0,1,1,0,0],
+                        [0,1,1,1,0,1,1,0,1,0,0,1,1,0,0],
+                        [0,1,1,1,0,1,1,0,1,1,1,1,0,0,0],
+                        [0,1,1,1,0,1,1,1,0,1,1,1,0,0,0],
+                        [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0],
+                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+                    ];
                     var ul = document.getElementById("ul");
                     var context = ul.getContext("2d");
                     for (var x = 0.5; x < 301; x += 20) {//вертикальные линии
