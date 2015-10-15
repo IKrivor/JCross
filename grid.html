@@ -1,4 +1,4 @@
-<html lang="en" ng-app="PaperGenerator">
+﻿<html lang="en" ng-app="PaperGenerator">
 <head>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
@@ -122,13 +122,21 @@
                         context.lineTo(301, y);
                     }
                     context.stroke();
+		function halmaOnClick(e) { 
+				var x1; 
+				var y1; 
+				x1 = (e.pageX - ul.offsetLeft) / 20 | 0; 
+				y1 = (e.pageY - ul.offsetTop) / 20 | 0; 
+				context.fillRect(x1*20, y1*20, 20, 20); 
+		} 
+		ul.addEventListener("click", halmaOnClick, false);
                 </script>
             </div>
 
         </div>
         <div layout="row" layout-align="space-around center" >
-            <img src="иконка.png.png">
-            <img src="иконка.png.png">
+            <img src="иконка.png">
+            <img src="иконка.png">
             <md-button style="background-color: tomato; color: white;">Проверить</md-button>
         </div>
     </div>
