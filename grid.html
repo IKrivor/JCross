@@ -24,21 +24,40 @@
 
 <div layout="row" layout-align="center center">
     <div layout="column" style="margin-top: 10mm;">
-        <div layout="row" layout-align="center end">
-            <canvas id="lh" width="101" height="201"></canvas>
+        <div layout="row" layout-align="center end" style="padding-top: 20mm;">
+            <canvas id="lh" width="101" height="201" style="background: #fff3d7;"></canvas>
             <script>
                 var lh = document.getElementById("lh");
-                var cont = lh.getContext("2d");
-
+                var conte = lh.getContext("2d");
+                for (var x = 0.5; x < 101; x += 20) {//вертикальные линии
+                    conte.moveTo(x, 0);
+                    conte.lineTo(x, 201);
+                }
+                for (var y = 0.5; y < 201; y += 20) {//горизонтальные линии
+                    conte.moveTo(0, y);
+                    conte.lineTo(101, y);
+                }
+                conte.stroke();
+                //conte.font = "bold 12px sans-serif";
+                //conte.textBaseline = "top";
+                //conte.fillText(ulleft[0][0], 1, 1);
             </script>
             <div layout="column" layout-align="center end">
-                <canvas id="th" width = "301" height="61"></canvas>
+                <canvas id="th" width = "301" height="61" style="background: #fff3d7;"></canvas>
                 <script>
                     var th = document.getElementById("th");
                     var cont = th.getContext("2d");
-
+                    for (var x = 0.5; x < 301; x += 20) {//вертикальные линии
+                        cont.moveTo(x, 0);
+                        cont.lineTo(x, 61);
+                    }
+                    for (var y = 0.5; y < 61; y += 20) {//горизонтальные линии
+                        cont.moveTo(0, y);
+                        cont.lineTo(301, y);
+                    }
+                    cont.stroke();
                 </script>
-                <canvas id="ul" width="301" height="201"></canvas>
+                <canvas id="ul" width="301" height="201" style="background: white;"></canvas>
                 <script>
                     var ul = document.getElementById("ul");
                     var context = ul.getContext("2d");
