@@ -14,7 +14,7 @@ function SplitMass(){
                         n++;
 
                 }
-                for (j=0; response.name!=',';j++)
+                for (j=0; response.name[j]!=',';j++)
                 {
                     m=j;
                 }
