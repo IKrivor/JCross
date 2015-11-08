@@ -1,0 +1,42 @@
+body{background-color: whitesmoke;}
+
+.header{width: 100%; height: 73%; background-color: white;}
+
+.rspace{width: 55%; background-color: white; margin-top: 10mm;}
+
+.rules{padding-left: 5%; padding-right: 5%;}
+
+.grid {background-color: white;}
+
+.menu{width: 100%; height: 27%; background-color: tomato;}
+
+.groupX {
+	font-size: 17px;
+	margin: 5px 0;
+	text-align: center;
+	font-weight: 400;
+	min-width:100px;
+
+}
+
+.md-button.left {
+	width: 40mm;
+	height: 5mm;
+	border-radius: 0 0 0 0;
+}
+
+.md-button.right {
+	width: 30mm;
+	height: 5mm;
+	border-radius: 0 0 0 0;
+}
+
+.logo{width: 85%; height: 102%;}
+
+.imgcross{width: 60%; height: 40%; padding-right: 0;}
+
+
+
+
+
+
