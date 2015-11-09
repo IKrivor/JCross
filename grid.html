@@ -18,25 +18,26 @@
 <script type='text/javascript' src='path/to/jquery.min.js'></script>
 <script type='text/javascript' src='path/to/angular.min.js'></script>
 <script type='text/javascript' src='path/to/ng-infinite-scroll.min.js'></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script src="app.js"></script>
-<script src="controllers/GeneratorCtrl.js"></script>
+<script src="apps/GeneratorCtrl.js"></script>
 
 <div layout="row" layout-align="center center">
     <div layout="column" style="margin-top: 10mm;">
         <div layout="row" layout-align="center end" style="padding-top: 20mm;">
-            <canvas id="lh" width="101" height="201" style="background: #fff3d7;">
+            <canvas id = "leftOfGrid"   style="background: #fff3d7;">
                 <script>
                     drawleft();
                 </script>
             </canvas>
 
             <div layout="column" layout-align="center end">
-                <canvas id="th" width = "301" height="61" style="background: #fff3d7;"></canvas>
+                <canvas id = "topOfGrid"  style="background: #fff3d7;"></canvas>
                 <script>
                     drawtop();
                 </script>
-                <canvas id="ul" width="301" height="201" style="background: white;"></canvas>
+                <canvas id = "bodyOfGrid"  style="background: white;"></canvas>
                 <script>
                     drawbody();
                 </script>

@@ -4,7 +4,7 @@ App.config(function ($routeProvider, $mdThemingProvider) {
     $routeProvider
         .when('/', {
             templateUrl: 'templates/generator.html',
-            controller: 'GeneratorCtrl'
+            controller: 'apps/GeneratorCtrl'
         })
         .otherwise({
             redirectTo: '/'
