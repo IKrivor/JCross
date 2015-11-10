@@ -69,25 +69,29 @@ App.controller('GeneratorCtrl', ['$scope', '$mdSidenav', function($scope){
 
 var matrixOfPicture;
 var gridOfUser;
+var bodyCanvas;
+var bodyContext;
 
-function SplitMass(){
+function readMatrixOfPict(){//считывает матрицу картинки из файла json
 	matrixOfPicture = new Array();
+	gridOfUser = new Array();
 	$.getJSON("document.json", function(json){
-		alert(json.matrix[0].length);
+		//alert(json.matrix[0].length);
 		for (var i = 0; i < json.matrix.length; i++){
 			matrixOfPicture[i] = new Array();
+			gridOfUser[i] = new Array();
 			for (var j = 0; j < json.matrix[0].length; j++){
 				matrixOfPicture[i][j] = json.matrix[i][j];
+				gridOfUser[i][j] = 0;
 			}
 		}
-		console.log(matrixOfPicture);
+		console.log(gridOfUser);
 	});
-
 }
 
-function drawHorizLines(context, widht, height){
+function drawHorizLines(context, widht, height){//горизонтальные линии
 	var thickLinesCount = 0;
-	for (var y = 0.5; y < height; y += 20) {//горизонтальные линии
+	for (var y = 0.5; y < height; y += 20) {
 		if (thickLinesCount != 5){
 			context.moveTo(0, y);
 			context.lineTo(widht, y);
@@ -102,9 +106,9 @@ function drawHorizLines(context, widht, height){
 		}
 	}
 }
-function drawVertLines(context, widht, height){
+function drawVertLines(context, widht, height){//вертикальные линии
 	var thickLinesCount = 0;
-	for (var x = 0.5; x < widht; x += 20) {//вертикальные линии
+	for (var x = 0.5; x < widht; x += 20) {
 		if (thickLinesCount != 5){
 			context.moveTo(x, 0);
 			context.lineTo(x, height);
@@ -120,8 +124,7 @@ function drawVertLines(context, widht, height){
 	}
 }
 
-function drawleft(){
-
+function drawLeft(){//рисует левый блок
 	var ulleft = [
 		[0,0,0,0,4],
 		[0,0,0,0,6],
@@ -156,7 +159,7 @@ function drawleft(){
 	}
 }
 
-function drawtop(){
+function drawTop(){//рисует верхний блок
 	var ultop = [
 		[0,0,0,0,0,0,0,0,2,2,0,0,0,0,0],
 		[3,3,0,0,0,0,0,3,4,2,3,0,3,0,0],
@@ -184,20 +187,55 @@ function drawtop(){
 	}
 }
 
-function drawbody(){
-	var bodyCanvas = document.getElementById("bodyOfGrid");
+function drawBody(){//рисует основное поле
+	bodyCanvas = document.getElementById("bodyOfGrid");
 	bodyCanvas.width = 301;
 	bodyCanvas.height = 201;
-	var bodyContext = bodyCanvas.getContext("2d");
+	bodyContext = bodyCanvas.getContext("2d");
 	drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
 	drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
 	bodyContext.stroke();
-	function halmaOnClick(e) {
-		x = 0;;
-		y = 0;;
+	drawGridCells();
+}
+
+function drawGridCells(){
+	var x = 0;
+	var y = 0;
+	function cellOnClick(e) {
 		x = (e.pageX - bodyCanvas.offsetLeft) / 20 | 0;
 		y = (e.pageY - bodyCanvas.offsetTop) / 20 | 0;
-		bodyContext.fillRect(x * 20, y * 20, 20, 20);
+		if (gridOfUser[y][x] == 0){
+			bodyContext.fillStyle = "black";
+			bodyContext.fillRect(x * 20, y * 20, 20, 20);
+			gridOfUser[y][x] = 1;
+		}
+		else{
+			bodyContext.fillStyle = "black";
+			bodyContext.fillRect(x * 20, y * 20, 20, 20);
+			bodyContext.fillStyle = "white";
+			bodyContext.fillRect(x * 20 + 1, y * 20 + 1, 19, 19);
+			drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+			drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+			bodyContext.stroke();
+			gridOfUser[y][x] = 0;
+		}
+
 	}
-	bodyCanvas.addEventListener("click", halmaOnClick, false);
+	bodyCanvas.addEventListener("click", cellOnClick, false);
 }
+
+function compareMatrix( matrix, grid ){
+	for(var i = 0; i < matrix.length; i++){
+		for(var j = 0; j < matrix[0].length; j++){
+			if (matrix[i][j] != grid[i][j]) return false;
+		}
+	}
+	return true;
+}
+
+function checkGrid(){
+	var resultOfCompare = compareMatrix(matrixOfPicture, gridOfUser);
+	if (resultOfCompare == true) alert("Правильно!");
+	else alert("Неправильно!");
+}
+

@@ -28,18 +28,19 @@
         <div layout="row" layout-align="center end" style="padding-top: 20mm;">
             <canvas id = "leftOfGrid"   style="background: #fff3d7;">
                 <script>
-                    drawleft();
+                    drawLeft();
                 </script>
             </canvas>
 
             <div layout="column" layout-align="center end">
                 <canvas id = "topOfGrid"  style="background: #fff3d7;"></canvas>
                 <script>
-                    drawtop();
+                    drawTop();
                 </script>
                 <canvas id = "bodyOfGrid"  style="background: white;"></canvas>
                 <script>
-                    drawbody();
+                    readMatrixOfPict();
+                    drawBody();
                 </script>
             </div>
 
@@ -47,7 +48,7 @@
         <div layout="row" layout-align="space-around center" >
             <img src="иконка.png">
             <img src="иконка.png">
-            <md-button style="background-color: tomato; color: white;">Проверить</md-button>
+            <md-button style="background-color: tomato; color: white;" onclick="checkGrid();">Проверить</md-button>
         </div>
     </div>
 </div>

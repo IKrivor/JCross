@@ -1,8 +1,8 @@
-checkGrid = function( matrixOfPicture, gridOfUser ){
-    for(var i = 0; i < matrixOfPicture.rowsNum; i++){
-        for(var j = 0; j < matrixOfPicture.columsNum; j++){
-            if (matrixOfPicture.matrix[i][j] != gridOfUser.matrix[i][i]) return false;
-        }
-    }
-    return true;
-}
+//checkGrid = function( matrix, grid ){
+//    for(var i = 0; i < matrix.length; i++){
+//        for(var j = 0; j < matrix[0].length; j++){
+//            if (matrix[i][j] != grid[i][j]) return false;
+//        }
+//    }
+//    return true;
+//}
