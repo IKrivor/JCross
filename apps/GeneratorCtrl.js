@@ -85,30 +85,30 @@ function readMatrixOfPict(){//считывает матрицу картинки из файла json
 				gridOfUser[i][j] = 0;
 			}
 		}
-		console.log(gridOfUser);
+		//console.log(gridOfUser);
 	});
 }
 
-function drawHorizLines(context, widht, height){//горизонтальные линии
+function drawHorizLines(context, width, height){//горизонтальные линии
 	var thickLinesCount = 0;
 	for (var y = 0.5; y < height; y += 20) {
 		if (thickLinesCount != 5){
 			context.moveTo(0, y);
-			context.lineTo(widht, y);
+			context.lineTo(width, y);
 			thickLinesCount++;
 		}
 		else{
 			thickLinesCount = 1;
 			context.moveTo(0, y);
-			context.lineTo(widht, y);
+			context.lineTo(width, y);
 			context.moveTo(0, y + 1);
-			context.lineTo(widht, y + 1);
+			context.lineTo(width, y + 1);
 		}
 	}
 }
-function drawVertLines(context, widht, height){//вертикальные линии
+function drawVertLines(context, width, height){//вертикальные линии
 	var thickLinesCount = 0;
-	for (var x = 0.5; x < widht; x += 20) {
+	for (var x = 0.5; x < width; x += 20) {
 		if (thickLinesCount != 5){
 			context.moveTo(x, 0);
 			context.lineTo(x, height);
@@ -225,6 +225,8 @@ function drawGridCells(){
 }
 
 function compareMatrix( matrix, grid ){
+	console.log(matrixOfPicture);
+	console.log(gridOfUser);
 	for(var i = 0; i < matrix.length; i++){
 		for(var j = 0; j < matrix[0].length; j++){
 			if (matrix[i][j] != grid[i][j]) return false;
@@ -235,7 +237,9 @@ function compareMatrix( matrix, grid ){
 
 function checkGrid(){
 	var resultOfCompare = compareMatrix(matrixOfPicture, gridOfUser);
-	if (resultOfCompare == true) alert("Правильно!");
-	else alert("Неправильно!");
+	if (resultOfCompare == true) alert("Right!");
+	else alert("Wrong!");
 }
+
+
 
