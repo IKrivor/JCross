@@ -71,21 +71,22 @@ var matrixOfPicture;
 var gridOfUser;
 var bodyCanvas;
 var bodyContext;
+var firstHNum = 0;
 
 function readMatrixOfPict(){//считывает матрицу картинки из файла json
-	matrixOfPicture = new Array();
-	gridOfUser = new Array();
+	matrixOfPicture = [];
+	gridOfUser = [];
 	$.getJSON("document.json", function(json){
 		//alert(json.matrix[0].length);
 		for (var i = 0; i < json.matrix.length; i++){
-			matrixOfPicture[i] = new Array();
-			gridOfUser[i] = new Array();
+			matrixOfPicture[i] = [];
+			gridOfUser[i] = [];
 			for (var j = 0; j < json.matrix[0].length; j++){
 				matrixOfPicture[i][j] = json.matrix[i][j];
 				gridOfUser[i][j] = 0;
 			}
 		}
-		//console.log(gridOfUser);
+		//console.log(gridOfUser)
 	});
 }
 
@@ -225,8 +226,8 @@ function drawGridCells(){
 }
 
 function compareMatrix( matrix, grid ){
-	console.log(matrixOfPicture);
-	console.log(gridOfUser);
+	//console.log(matrixOfPicture);
+	//console.log(gridOfUser);
 	for(var i = 0; i < matrix.length; i++){
 		for(var j = 0; j < matrix[0].length; j++){
 			if (matrix[i][j] != grid[i][j]) return false;
@@ -241,5 +242,44 @@ function checkGrid(){
 	else alert("Wrong!");
 }
 
+function firstHelp(){//показать неправильно закрашенную клетку
+	if (firstHNum != 3){
+		var incorrectCells = [], k = 0;
+		function incorCellPick(matrix, grid){
+			for(var i = 0; i < matrix.length; i++){
+				for(var j = 0; j < matrix[0].length; j++){
+					if (matrix[i][j] == 0 && grid[i][j] == 1){
+						incorrectCells[k] = [];
+						incorrectCells[k][0] = i;
+						incorrectCells[k][1] = j;
+						k++;
+					}
+				}
+			}
+			return Math.floor(Math.random() * (incorrectCells.length));
+		}
+		var randomIndex = incorCellPick(matrixOfPicture, gridOfUser);
+		var pulseCoun = 0, colorCh = 1;
+		var timer = setInterval(function(){
+			if (pulseCoun == 3) clearInterval(timer);
+			if (colorCh == 1) {
+				bodyContext.fillStyle = "#FF6347";
+				colorCh = 2;
+				pulseCoun++;
+			}
+			else {
+				bodyContext.fillStyle = "white";
+				colorCh = 1;
+			}
+			bodyContext.fillRect(incorrectCells[randomIndex][1] * 20, incorrectCells[randomIndex][0] * 20, 20, 20);
+			drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+			drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+			bodyContext.stroke();
 
+		}, 600);
+		gridOfUser[incorrectCells[randomIndex][0]][incorrectCells[randomIndex][1]] = 0;
+		firstHNum++;
+	}
+	else alert("There are no helps!");
+}
 
