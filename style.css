@@ -1,14 +1,28 @@
-body{background-color: whitesmoke;}
+body{background-color: whitesmoke; height: auto;}
 
 .header{width: 100%; height: 73%; background-color: white;}
 
-.rspace{width: 55%; background-color: white; margin-top: 10mm;}
+.rspace{width: 55%; background-color: white;}
 
 .rules{padding-left: 5%; padding-right: 5%;}
 
 .grid {background-color: white;}
 
-.menu{width: 100%; height: 27%; background-color: tomato;}
+.menu{width: 100%; height: 27%; background-color: #ff6347;}
+
+.circle{
+	position: relative;
+	z-index: 1;
+	display: inline-block;
+	width: 10mm;
+	height: 10mm;
+	border-radius: 100%;
+	outline: none;
+	background: #ff6347;
+	cursor: hand;
+}
+
+.canvas{cursor: hand;}
 
 .groupX {
 	font-size: 17px;
@@ -16,7 +30,6 @@ body{background-color: whitesmoke;}
 	text-align: center;
 	font-weight: 400;
 	min-width:100px;
-
 }
 
 .md-button.left {
@@ -35,6 +48,42 @@ body{background-color: whitesmoke;}
 
 .imgcross{width: 60%; height: 40%; padding-right: 0;}
 
+.help {
+	color: white; outline: none; /*цвет подсказки*/
+	position: relative; /*позиция*/
+}
+
+/*положение всплывающей подсказки*/
+.help span {
+	margin-left: -999em;
+	position: absolute;
+}
+
+/*подсказка при наведении курсора*/
+.help:hover span {
+	font-family: Verdana, Tahoma, Geneva, sans-serif; /*шрифт*/
+	font-size: 10pt;
+	position: absolute; /*позиция*/
+	left: 10px;
+	top: 25px;
+	z-index: 99;
+	margin-left: 0;
+	width: 200px; /*ширина блока подсказки*/
+}
+
+/*параметры изображения*/
+.help:hover img {
+	border: 0;
+}
+
+/*блок всплывающей подсказки*/
+.airhelp {
+	background: none repeat scroll 0 0 white; /*цвет и прозрачность фона*/
+	border: 1px solid #959595; /*параметры бордюра*/
+	border-radius: 5px; /*закругление углов*/
+	color: #959595; /*цвет шрифта всплывающей подсказки*/
+	padding: 5px; /*внутренний отступ*/
+}
 
 
 

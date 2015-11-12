@@ -207,20 +207,16 @@ function drawGridCells(){
 		y = (e.pageY - bodyCanvas.offsetTop) / 20 | 0;
 		if (gridOfUser[y][x] == 0){
 			bodyContext.fillStyle = "black";
-			bodyContext.fillRect(x * 20, y * 20, 20, 20);
 			gridOfUser[y][x] = 1;
 		}
 		else{
-			bodyContext.fillStyle = "black";
-			bodyContext.fillRect(x * 20, y * 20, 20, 20);
 			bodyContext.fillStyle = "white";
-			bodyContext.fillRect(x * 20 + 1, y * 20 + 1, 19, 19);
-			drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
-			drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
-			bodyContext.stroke();
 			gridOfUser[y][x] = 0;
 		}
-
+		bodyContext.fillRect(x * 20 + 1, y * 20 + 1, 19, 19);
+		drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+		drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+		bodyContext.stroke();
 	}
 	bodyCanvas.addEventListener("click", cellOnClick, false);
 }
@@ -263,6 +259,7 @@ function firstHelp(){//показать неправильно закрашенную клетку
 		var timer = setInterval(function(){
 			if (pulseCoun == 3) clearInterval(timer);
 			if (colorCh == 1) {
+				//bodyContext.fillStyle = "#72ee68";
 				bodyContext.fillStyle = "#FF6347";
 				colorCh = 2;
 				pulseCoun++;
