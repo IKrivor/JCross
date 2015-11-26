@@ -18,10 +18,11 @@
 <script type='text/javascript' src='path/to/jquery.min.js'></script>
 <script type='text/javascript' src='path/to/angular.min.js'></script>
 <script type='text/javascript' src='path/to/ng-infinite-scroll.min.js'></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script src="app.js"></script>
-<script src="controllers/GeneratorCtrl.js"></script>
-
+<script src="apps/GeneratorCtrl.js"></script>
+<body>
 <div layout="row" layout-align="center center">
 <div  class="rspace" >
     <div class="rules" >
@@ -41,8 +42,101 @@
             несколько раз.</p>
         <p>Как только закрасили какие-либо клетки, число, которое относится к этим клеткам, надо перечеркнуть, чтобы не запутаться
             (особенно на огромных кроссвордах).</p>
+
+        <p><B>Пример решения маленького кроссворда:</B></p>
+        <div layout="column">
+            <div layout="row">
+                <div flex>
+                    1. Имеем исходный японский кроссворд. Для простоты его размеры 5х5 клеток.
+                </div>
+                <div flex>
+                    <img src="design/1.png">
+                </div>
+                <div flex>
+                    2. Обратим внимание на большие числа. Сверху стоит число 5. Поскольку в столбце 5 клеток, то весь столбец можно закрасить.
+                </div>
+                <div flex>
+                    <img src="design/2.png">
+                </div>
+            </div>
+            <div layout="row">
+                <div flex>
+                    <p></p>
+                    3. Слева тоже есть число 5. Закрасим целиком четвертую сверху строчку кроссворда. Не забываем зачеркивать отработанные числа.
+                </div>
+                <div flex>
+                    <p></p>
+                    <img src="design/3.png">
+                </div>
+                <div flex>
+                    <p></p>
+                    4. Слева нашли число 3. Видим, что крайняя правая клетка строки закрашена, то закрашиваем 2 соседние, а остальные помечаем пустыми.
+                </div>
+                <div flex>
+                    <p></p>
+                    <img src="design/4.png">
+                </div>
+            </div>
+            <div layout="row">
+                <div flex>
+                    <p></p>
+                    5. 3 и 4 столбцы имеют по две одиночные клетки. И они уже закрашены, значит помечаем остальные клетки как пустые. И зачеркиваем числа.
+                </div>
+                <div flex>
+                    <p></p>
+                    <img src="design/5.png">
+                </div>
+                <div flex>
+                    <p></p>
+                    6. Второй столбец имеет закрашенную клетку и 2 пустые выше. Закрашенные клетки не соприкасаются, значит, красим клетку из второй строки.
+                </div>
+                <div flex>
+                    <p></p>
+                    <img src="design/6.png">
+                </div>
+            </div>
+            <div layout="row">
+                <div flex>
+                    <p></p>
+                    7. Автоматически получили готовую вторую строку, а в третьей - единственный вариант. Закрашиваем и эту клетку.
+                </div>
+                <div flex>
+                    <p></p>
+                    <img src="design/7.png">
+                </div>
+                <div flex>
+                    <p></p>
+                    8. Последний шаг - красим последнюю клетку. Зачеркиваем тройку из первого столбца и две единицы из пятой строки. Кроссворд разгадан!
+                </div>
+                <div flex>
+                    <p></p>
+                    <img src="design/8.png">
+                </div>
+            </div>
+        </div>
+        <p><B>Подсказки:</B></p>
+        <div layout="column">
+            <div layout="row">
+                <div flex="5">
+                    <img src="design/крестик%20фон.png" style="width: 8mm; height: 8mm;">
+                </div>
+                <div flex="95">
+                    Показывает случайную неправильно закрашенную клетку.
+                </div>
+            </div>
+            <div layout="row">
+                <div flex="5">
+                    <p></p>
+                    <img src="design/галочка%20фон.png" style="width: 8mm; height: 8mm;">
+                </div>
+                <div flex="95">
+                    <p></p>
+                    Показывает случайную клетку, которая должна быть закрашена.
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </div>
-
+</body>
 </html>
