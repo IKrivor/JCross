@@ -283,36 +283,40 @@ function secondHelp(){//показать клетку, которая должна быть закрашена
 					}
 				}
 			}
-			return Math.floor(Math.random() * (correctCells.length));
+			if (correctCells.length == 0) return -1;
+			else return Math.floor(Math.random() * (correctCells.length));
 		}
 		var randomIndex = corCellPick(matrixOfPicture, gridOfUser);
-		var pulseCount = 0, colorCh = 1;
-		var timer = setInterval(function(){
-			if (pulseCount == 3) {
-				bodyContext.fillStyle = "black";
-				bodyContext.fillRect(correctCells[randomIndex][1] * 20, correctCells[randomIndex][0] * 20, 20, 20);
-				drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
-				drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
-				bodyContext.stroke();
-				clearInterval(timer);
-			} else {
-				if (colorCh == 1) {
-					bodyContext.fillStyle = "#72EE68";
-					colorCh = 2;
-					pulseCount++;
+		if (randomIndex == -1) alert("All the correct cells are painted!");
+		else {
+			var pulseCount = 0, colorCh = 1;
+			var timer = setInterval(function(){
+				if (pulseCount == 3) {
+					bodyContext.fillStyle = "black";
+					bodyContext.fillRect(correctCells[randomIndex][1] * 20, correctCells[randomIndex][0] * 20, 20, 20);
+					drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+					drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+					bodyContext.stroke();
+					clearInterval(timer);
+				} else {
+					if (colorCh == 1) {
+						bodyContext.fillStyle = "#72EE68";
+						colorCh = 2;
+						pulseCount++;
+					}
+					else {
+						bodyContext.fillStyle = "white";
+						colorCh = 1;
+					}
+					bodyContext.fillRect(correctCells[randomIndex][1] * 20, correctCells[randomIndex][0] * 20, 20, 20);
+					drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+					drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+					bodyContext.stroke();
 				}
-				else {
-					bodyContext.fillStyle = "white";
-					colorCh = 1;
-				}
-				bodyContext.fillRect(correctCells[randomIndex][1] * 20, correctCells[randomIndex][0] * 20, 20, 20);
-				drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
-				drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
-				bodyContext.stroke();
-			}
-		}, 600);
-		gridOfUser[correctCells[randomIndex][0]][correctCells[randomIndex][1]] = 1;
-		secondHNum++;
+			}, 600);
+			gridOfUser[correctCells[randomIndex][0]][correctCells[randomIndex][1]] = 1;
+			secondHNum++;
+		}
 	}
 	else alert("There are no second helps!");
 }
