@@ -1,70 +1,56 @@
 App.controller('GeneratorCtrl', ['$scope', '$mdSidenav', function($scope){
 
 	var actionLeft1 = true,
-		actionRight1 = false,
-	 	ulitka = [
-			[0,0,0,0,0,0,0,1,1,1,1,0,0,0,0],
-			[0,0,0,0,0,0,1,1,1,1,1,1,0,0,0],
-			[1,0,1,0,0,0,1,1,0,0,1,1,0,0,0],
-			[1,0,1,0,0,1,1,0,1,1,0,1,1,0,0],
-			[1,0,1,0,0,1,1,0,1,1,0,1,1,0,0],
-			[0,1,1,1,0,1,1,0,1,0,0,1,1,0,0],
-			[0,1,1,1,0,1,1,0,1,1,1,1,0,0,0],
-			[0,1,1,1,0,1,1,1,0,1,1,1,0,0,0],
-			[0,0,1,1,1,1,1,1,1,1,1,1,1,0,0],
-			[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-		];
-		var w = 15,
-		h = 10,
-		cell = 20;
+		actionRight1 = false;
+	//var w = 15, h = 10, cell = 20;
 
 	//заготовка анализа кол-ва подряд идущих клеток
 	//в левом блоке
-	function lblock(){
-		var lh = document.getElementById("lh");
-		var   count = 0,
-			max = 0;
-		for (var i = 0; i < h; i++){
-			if (count > max)
-				max = count;
-			count = 0;
-			for (var j = 0; j < w; j++){
-				if (ulitka[i][j] == 1){
-					count++;
-					j++;
-					if (j != 15){
-						while(ulitka[i][j] == 1){
-							j++;
-						}
-					}
-				}
-			}
-		}
-		lh.width = cell * max;
-	}
-	//в верхнем блоке
-	function tblock(){
-		var th = document.getElementById("th");
-		var   count = 0,
-			max = 0;
-		for (var j = 0; j < w; j++){
-			if (count > max)
-				max = count;
-			count = 0;
-			for (var i = 0; i < h; i++){
-				if (ulitka[i][j] == 1){
-					count++;
-					i++;
-					if (i != 10){
-						while(ulitka[i][j] == 1){
-							i++;
-						}
-					}
-				}
-			}
-		}
-		th.height = cell * max;
-	}
+	//function lblock(){
+	//	var lh = document.getElementById("lh");
+	//	var   count = 0,
+	//		max = 0;
+	//	for (var i = 0; i < h; i++){
+	//		if (count > max)
+	//			max = count;
+	//		count = 0;
+	//		for (var j = 0; j < w; j++){
+	//			if (ulitka[i][j] == 1){
+	//				count++;
+	//				j++;
+	//				if (j != 15){
+	//					while(ulitka[i][j] == 1){
+	//						j++;
+	//					}
+	//				}
+	//			}
+	//		}
+	//	}
+	//	lh.width = cell * max;
+	//}
+	////в верхнем блоке
+	//function tblock(){
+	//	var th = document.getElementById("th");
+	//	var   count = 0,
+	//		max = 0;
+	//	for (var j = 0; j < w; j++){
+	//		if (count > max)
+	//			max = count;
+	//		count = 0;
+	//		for (var i = 0; i < h; i++){
+	//			if (ulitka[i][j] == 1){
+	//				count++;
+	//				i++;
+	//				if (i != 10){
+	//					while(ulitka[i][j] == 1){
+	//						i++;
+	//					}
+	//				}
+	//			}
+	//		}
+	//	}
+	//	th.height = cell * max;
+	//}
 }]);
 
 var matrixOfPicture;
@@ -72,12 +58,12 @@ var gridOfUser;
 var bodyCanvas;
 var bodyContext;
 var firstHNum = 0;
+var secondHNum = 0;
 
 function readMatrixOfPict(){//считывает матрицу картинки из файла json
 	matrixOfPicture = [];
 	gridOfUser = [];
 	$.getJSON("document.json", function(json){
-		//alert(json.matrix[0].length);
 		for (var i = 0; i < json.matrix.length; i++){
 			matrixOfPicture[i] = [];
 			gridOfUser[i] = [];
@@ -142,7 +128,7 @@ function drawLeft(){//рисует левый блок
 	var leftCanvas = document.getElementById("leftOfGrid");
 	leftCanvas.width = 101;
 	leftCanvas.height = 201;
-	var leftContex = leftCanvas.getContext("2d");
+	leftContex = leftCanvas.getContext("2d");
 	drawHorizLines(leftContex, leftCanvas.width, leftCanvas.height);
 	drawVertLines(leftContex, leftCanvas.width, leftCanvas.height);
 	leftContex.stroke();
@@ -255,14 +241,13 @@ function firstHelp(){//показать неправильно закрашенную клетку
 			return Math.floor(Math.random() * (incorrectCells.length));
 		}
 		var randomIndex = incorCellPick(matrixOfPicture, gridOfUser);
-		var pulseCoun = 0, colorCh = 1;
+		var pulseCount = 0, colorCh = 1;
 		var timer = setInterval(function(){
-			if (pulseCoun == 3) clearInterval(timer);
+			if (pulseCount == 3) clearInterval(timer);
 			if (colorCh == 1) {
-				//bodyContext.fillStyle = "#72ee68";
 				bodyContext.fillStyle = "#FF6347";
 				colorCh = 2;
-				pulseCoun++;
+				pulseCount++;
 			}
 			else {
 				bodyContext.fillStyle = "white";
@@ -277,6 +262,54 @@ function firstHelp(){//показать неправильно закрашенную клетку
 		gridOfUser[incorrectCells[randomIndex][0]][incorrectCells[randomIndex][1]] = 0;
 		firstHNum++;
 	}
-	else alert("There are no helps!");
+	else alert("There are no first helps!");
+}
+
+function secondHelp(){//показать клетку, которая должна быть закрашена
+	if (secondHNum != 3){
+		var correctCells = [], k = 0;
+		function corCellPick(matrix, grid){
+			for(var i = 0; i < matrix.length; i++){
+				for(var j = 0; j < matrix[0].length; j++){
+					if (matrix[i][j] == 1 && grid[i][j] == 0){
+						correctCells[k] = [];
+						correctCells[k][0] = i;
+						correctCells[k][1] = j;
+						k++;
+					}
+				}
+			}
+			return Math.floor(Math.random() * (correctCells.length));
+		}
+		var randomIndex = corCellPick(matrixOfPicture, gridOfUser);
+		var pulseCount = 0, colorCh = 1;
+		var timer = setInterval(function(){
+			if (pulseCount == 3) {
+				bodyContext.fillStyle = "black";
+				bodyContext.fillRect(correctCells[randomIndex][1] * 20, correctCells[randomIndex][0] * 20, 20, 20);
+				drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+				drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+				bodyContext.stroke();
+				clearInterval(timer);
+			} else {
+				if (colorCh == 1) {
+					bodyContext.fillStyle = "#72EE68";
+					colorCh = 2;
+					pulseCount++;
+				}
+				else {
+					bodyContext.fillStyle = "white";
+					colorCh = 1;
+				}
+				bodyContext.fillRect(correctCells[randomIndex][1] * 20, correctCells[randomIndex][0] * 20, 20, 20);
+				drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+				drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+				bodyContext.stroke();
+			}
+		}, 600);
+		gridOfUser[correctCells[randomIndex][0]][correctCells[randomIndex][1]] = 1;
+		secondHNum++;
+	}
+	else alert("There are no second helps!");
 }
 
