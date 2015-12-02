@@ -238,29 +238,33 @@ function firstHelp(){//показать неправильно закрашенную клетку
 					}
 				}
 			}
-			return Math.floor(Math.random() * (incorrectCells.length));
+			if (incorrectCells.length == 0) return -1;
+			else return Math.floor(Math.random() * (incorrectCells.length));
 		}
 		var randomIndex = incorCellPick(matrixOfPicture, gridOfUser);
-		var pulseCount = 0, colorCh = 1;
-		var timer = setInterval(function(){
-			if (pulseCount == 3) clearInterval(timer);
-			if (colorCh == 1) {
-				bodyContext.fillStyle = "#FF6347";
-				colorCh = 2;
-				pulseCount++;
-			}
-			else {
-				bodyContext.fillStyle = "white";
-				colorCh = 1;
-			}
-			bodyContext.fillRect(incorrectCells[randomIndex][1] * 20, incorrectCells[randomIndex][0] * 20, 20, 20);
-			drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
-			drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
-			bodyContext.stroke();
+		if (randomIndex == -1) alert("All cells are correct!");
+		else {
+			var pulseCount = 0, colorCh = 1;
+			var timer = setInterval(function(){
+				if (pulseCount == 3) clearInterval(timer);
+				if (colorCh == 1) {
+					bodyContext.fillStyle = "#FF6347";
+					colorCh = 2;
+					pulseCount++;
+				}
+				else {
+					bodyContext.fillStyle = "white";
+					colorCh = 1;
+				}
+				bodyContext.fillRect(incorrectCells[randomIndex][1] * 20, incorrectCells[randomIndex][0] * 20, 20, 20);
+				drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+				drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+				bodyContext.stroke();
 
-		}, 600);
-		gridOfUser[incorrectCells[randomIndex][0]][incorrectCells[randomIndex][1]] = 0;
-		firstHNum++;
+			}, 600);
+			gridOfUser[incorrectCells[randomIndex][0]][incorrectCells[randomIndex][1]] = 0;
+			firstHNum++;
+		}
 	}
 	else alert("There are no first helps!");
 }
