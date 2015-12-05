@@ -4,30 +4,7 @@ App.controller('GeneratorCtrl', ['$scope', '$mdSidenav', function($scope){
 		actionRight1 = false;
 	//var w = 15, h = 10, cell = 20;
 
-	//заготовка анализа кол-ва подряд идущих клеток
-	//в левом блоке
-	//function lblock(){
-	//	var lh = document.getElementById("lh");
-	//	var   count = 0,
-	//		max = 0;
-	//	for (var i = 0; i < h; i++){
-	//		if (count > max)
-	//			max = count;
-	//		count = 0;
-	//		for (var j = 0; j < w; j++){
-	//			if (ulitka[i][j] == 1){
-	//				count++;
-	//				j++;
-	//				if (j != 15){
-	//					while(ulitka[i][j] == 1){
-	//						j++;
-	//					}
-	//				}
-	//			}
-	//		}
-	//	}
-	//	lh.width = cell * max;
-	//}
+	
 	////в верхнем блоке
 	//function tblock(){
 	//	var th = document.getElementById("th");
@@ -53,27 +30,24 @@ App.controller('GeneratorCtrl', ['$scope', '$mdSidenav', function($scope){
 	//}
 }]);
 
-var matrixOfPicture;
-var gridOfUser;
+var matrixOfPicture = [];
+var gridOfUser = [];
 var bodyCanvas;
 var bodyContext;
 var firstHNum = 0;
 var secondHNum = 0;
 var xPrevCell = 0;
 var yPrevCell = 0;
+var leftBlock = [];
 
 /**
  * Cчитывает матрицу картинки из файла json
  */
 function readMatrixOfPict(){
-	matrixOfPicture = [];
-	gridOfUser = [];
-
 	$.getJSON("document.json", function(json){
 		for (var i = 0; i < json.matrix.length; i++){
 			matrixOfPicture[i] = [];
 			gridOfUser[i] = [];
-
 			for (var j = 0; j < json.matrix[0].length; j++){
 				matrixOfPicture[i][j] = json.matrix[i][j];
 				gridOfUser[i][j] = 0;
@@ -87,7 +61,7 @@ function readMatrixOfPict(){
  * Рисует горизонтальные линии на игровом поле
  *
  * @param context Контекст канваса, на котором будет рисоваться
- * @param width Ширина каваса
+ * @param width Ширина канваса
  * @param height Высота канваса
  */
 function drawHorizLines(context, width, height){
@@ -144,45 +118,99 @@ function drawVertLines(context, width, height){
  * Рисует левый блок с цифрами
  */
 function drawLeft(){
-	var ulleft = [
-		[0,0,0,0,4],
-		[0,0,0,0,6],
-		[0,1,1,2,2],
-		[1,1,2,2,2],
-		[1,1,2,2,2],
-		[0,3,2,1,2],
-		[0,0,3,2,4],
-		[0,0,3,3,3],
-		[0,0,0,0,11],
-		[0,0,0,0,15]
-	];
-	var ullx = 10, ully = 5;
 	var leftCanvas = document.getElementById("leftOfGrid");
+	var countOfCells = 0;
+	var	max = 0;
+	var timer = setInterval(function(){
 
-	leftCanvas.width = 101;
-	leftCanvas.height = 201;
-	leftContex = leftCanvas.getContext("2d");
-	drawHorizLines(leftContex, leftCanvas.width, leftCanvas.height);
-	drawVertLines(leftContex, leftCanvas.width, leftCanvas.height);
-	leftContex.stroke();
-	leftContex.font = "bold 12px sans-serif";
-	leftContex.textBaseline = "top";
+		for (var i = 0; i < matrixOfPicture.length; i++){
 
-	var a = 5, b = 5;
+			if (countOfCells > max) max = countOfCells;
 
-	for (var i = 0; i < ully; i++) {
-		a = 5 + (20*i);
+			countOfCells = 0;
 
-		for (var j = 0; j < ullx; j++) {
-			b = 5 + (20*j);
+			for (var j = 0; j < matrixOfPicture[0].length; j++){
 
-			if (ulleft[j][i] != 0){
-				leftContex.fillText(ulleft[j][i], a, b);
+				if (matrixOfPicture[i][j] == 1){
+					countOfCells++;
+					j++;
+
+					if (j != matrixOfPicture[0].length){
+
+						while(matrixOfPicture[i][j] == 1){
+							j++;
+						}
+
+					}
+
+				}
+			}
+		}
+
+		leftCanvas.width = max * 20 + 1;
+		leftCanvas.height = matrixOfPicture.length * 20 + 1;
+		countOfCells = 0;
+
+		for (var i = 0; i < matrixOfPicture.length; i++) {
+			leftBlock[i] = [];
+
+			for (var j = 0; j < max; j++)
+				leftBlock[i][j] = 0;
+		}
+
+		var k = max - 1;
+
+		for (var i = 0; i < matrixOfPicture.length; i++) {
+			k = max - 1;
+
+			for (var j = matrixOfPicture[0].length - 1; j >= 0; j--) {
+
+				if (matrixOfPicture[i][j] == 1){
+					countOfCells++;
+					j--;
+
+					if (j != -1){
+
+						while(matrixOfPicture[i][j] == 1){
+							countOfCells++;
+							j--;
+						}
+
+					}
+
+					j++;
+					leftBlock[i][k] = countOfCells;
+					k--;
+					countOfCells = 0;
+				}
+			}
+		}
+
+		var leftContex = leftCanvas.getContext("2d");
+
+		drawHorizLines(leftContex, leftCanvas.width, leftCanvas.height);
+		drawVertLines(leftContex, leftCanvas.width, leftCanvas.height);
+		leftContex.stroke();
+		leftContex.font = "bold 12px sans-serif";
+		leftContex.textBaseline = "top";
+
+		var a = 5, b = 5;
+
+		for (var i = 0; i < max; i++) {
+			a = 5 + (20*i);
+
+			for (var j = 0; j < matrixOfPicture.length; j++) {
+				b = 5 + (20*j);
+
+				if (leftBlock[j][i] != 0){
+					leftContex.fillText(leftBlock[j][i], a, b);
+				}
+
 			}
 
 		}
-
-	}
+		clearInterval(timer);
+	},10);
 }
 
 /**
@@ -227,15 +255,20 @@ function drawTop(){
  * Рисует основное поле
  */
 function drawBody(){
-	bodyCanvas = document.getElementById("bodyOfGrid");
-	bodyCanvas.width = 301;
-	bodyCanvas.height = 201;
-	bodyContext = bodyCanvas.getContext("2d");
-	drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
-	drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
-	bodyContext.stroke();
-	bodyCanvas.addEventListener("click", cellOnClick, false);
-	bodyCanvas.addEventListener("mousemove", cellMouseMove, false);
+	var timer = setInterval(function(){
+		bodyCanvas = document.getElementById("bodyOfGrid");
+		bodyCanvas.width = matrixOfPicture[0].length * 20 + 1;
+		bodyCanvas.height = matrixOfPicture.length * 20 + 1;
+		bodyContext = bodyCanvas.getContext("2d");
+		drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+		drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+		bodyContext.stroke();
+		bodyCanvas.addEventListener("click", cellOnClick, false);
+		bodyCanvas.addEventListener("mousemove", cellMouseMove, false);
+		clearInterval(timer);
+	},5)
+
+
 }
 
 /**
