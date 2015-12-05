@@ -59,6 +59,8 @@ var bodyCanvas;
 var bodyContext;
 var firstHNum = 0;
 var secondHNum = 0;
+var xPrevCell = 0;
+var yPrevCell = 0;
 
 /**
  * Cчитывает матрицу картинки из файла json
@@ -233,6 +235,7 @@ function drawBody(){
 	drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
 	bodyContext.stroke();
 	bodyCanvas.addEventListener("click", cellOnClick, false);
+	bodyCanvas.addEventListener("mousemove", cellMouseMove, false);
 }
 
 /**
@@ -242,22 +245,66 @@ function cellOnClick(e) {
 	var x = 0;
 	var y = 0;
 
+	var timer = setInterval(function(){
+		x = (e.pageX - bodyCanvas.offsetLeft) / 20 | 0;
+		y = (e.pageY - bodyCanvas.offsetTop) / 20 | 0;
+
+		if (gridOfUser[y][x] == 0){
+			bodyContext.fillStyle = "black";
+			gridOfUser[y][x] = 1;
+		}
+		else{
+			bodyContext.fillStyle = "white";
+			gridOfUser[y][x] = 0;
+		}
+
+		bodyContext.fillRect(x * 20 + 1, y * 20 + 1, 19, 19);
+		drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+		drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
+		bodyContext.stroke();
+		clearInterval(timer);
+	}, 100);
+}
+
+/**
+ * Выделяет клетку, на которую наведен курсор
+ */
+function cellMouseMove(e) {
+	var x = 0;
+	var y = 0;
+
+	if (gridOfUser[yPrevCell][xPrevCell] == 0) {
+		bodyContext.fillStyle = "white";
+		bodyContext.fillRect(xPrevCell * 20 + 1, yPrevCell * 20 + 1, 19, 19);
+		bodyContext.stroke();
+	} else {
+		bodyContext.fillStyle = "black";
+		bodyContext.fillRect(xPrevCell * 20 + 1, yPrevCell * 20 + 1, 19, 19);
+		bodyContext.stroke();
+	}
+
 	x = (e.pageX - bodyCanvas.offsetLeft) / 20 | 0;
 	y = (e.pageY - bodyCanvas.offsetTop) / 20 | 0;
 
-	if (gridOfUser[y][x] == 0){
+	if (gridOfUser[y][x] == 0) {
 		bodyContext.fillStyle = "black";
-		gridOfUser[y][x] = 1;
-	}
-	else{
+		bodyContext.fillRect(x * 20 + 1, y * 20 + 1, 20, 20);
 		bodyContext.fillStyle = "white";
-		gridOfUser[y][x] = 0;
-	}
+		bodyContext.fillRect(x * 20 + 2, y * 20 + 2, 17, 17);
+		bodyContext.stroke();
 
-	bodyContext.fillRect(x * 20 + 1, y * 20 + 1, 19, 19);
-	drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
-	drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
-	bodyContext.stroke();
+		xPrevCell = x;
+		yPrevCell = y;
+	} else {
+		bodyContext.fillStyle = "white";
+		bodyContext.fillRect(x * 20 + 1, y * 20 + 1, 20, 20);
+		bodyContext.fillStyle = "black";
+		bodyContext.fillRect(x * 20 + 3, y * 20 + 3, 15, 15);
+		bodyContext.stroke();
+
+		xPrevCell = x;
+		yPrevCell = y;
+	}
 }
 
 /**
@@ -344,7 +391,7 @@ function firstHelp(){
 				drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
 				drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
 				bodyContext.stroke();
-			}, 600);
+			}, 500);
 
 			gridOfUser[incorrectCells[randomIndex][0]][incorrectCells[randomIndex][1]] = 0;
 			firstHNum++;
@@ -417,7 +464,7 @@ function secondHelp(){
 					drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
 					bodyContext.stroke();
 				}
-			}, 600);
+			}, 500);
 
 			gridOfUser[correctCells[randomIndex][0]][correctCells[randomIndex][1]] = 1;
 			secondHNum++;
