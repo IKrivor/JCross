@@ -211,7 +211,7 @@ function drawLeft(){
 
 		}
 		clearInterval(timer);
-	},10);
+	},2);
 }
 
 /**
@@ -271,7 +271,7 @@ function drawBody(){
 		bodyCanvas.addEventListener("click", cellOnClick, false);
 		bodyCanvas.addEventListener("mousemove", cellMouseMove, false);
 		clearInterval(timer);
-	},5)
+	},2)
 
 }
 
@@ -433,9 +433,12 @@ function firstHelp(){
 			gridOfUser[incorrectCells[randomIndex][0]][incorrectCells[randomIndex][1]] = 0;
 			firstHNum--;
 				document.getElementById('help1').innerHTML = firstHNum.toString();
+			if (firstHNum == 0) {
+					document.getElementById('help1but').style.background = '#808080';
+					document.getElementById('help1but').style.cursor = 'pointer';
+			}
 		}
 	}
-	else alert("There are no first helps!");
 }
 
 /**
@@ -507,8 +510,11 @@ function secondHelp(){
 			gridOfUser[correctCells[randomIndex][0]][correctCells[randomIndex][1]] = 1;
 			secondHNum--;
 			document.getElementById('help2').innerHTML = secondHNum.toString();
+			if (secondHNum == 0) {
+				document.getElementById('help2but').style.background = '#808080';
+				document.getElementById('help2but').style.cursor = 'pointer';
+			}
 		}
 	}
-	else alert("There are no second helps!");
 }
 
