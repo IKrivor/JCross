@@ -4,7 +4,7 @@ App.controller('GeneratorCtrl', ['$scope', '$mdSidenav', function($scope){
 		actionRight1 = false;
 	//var w = 15, h = 10, cell = 20;
 
-	
+
 	////в верхнем блоке
 	//function tblock(){
 	//	var th = document.getElementById("th");
@@ -34,11 +34,12 @@ var matrixOfPicture = [];
 var gridOfUser = [];
 var bodyCanvas;
 var bodyContext;
-var firstHNum = 0;
-var secondHNum = 0;
+var firstHNum = 3;
+var secondHNum = 3;
 var xPrevCell = 0;
 var yPrevCell = 0;
 var leftBlock = [];
+
 
 /**
  * Cчитывает матрицу картинки из файла json
@@ -255,6 +256,10 @@ function drawTop(){
  * Рисует основное поле
  */
 function drawBody(){
+	document.addEventListener( "DOMContentLoaded", function() {
+		document.getElementById('help1').innerHTML = firstHNum.toString();
+		document.getElementById('help2').innerHTML = secondHNum.toString();
+	}, false );
 	var timer = setInterval(function(){
 		bodyCanvas = document.getElementById("bodyOfGrid");
 		bodyCanvas.width = matrixOfPicture[0].length * 20 + 1;
@@ -267,7 +272,6 @@ function drawBody(){
 		bodyCanvas.addEventListener("mousemove", cellMouseMove, false);
 		clearInterval(timer);
 	},5)
-
 
 }
 
@@ -372,7 +376,7 @@ function checkGrid(){
  * Показывает неправильно закрашенную клетку
  */
 function firstHelp(){
-	if (firstHNum != 3){
+	if (firstHNum != 0){
 		var incorrectCells = [], k = 0;
 
 		/**
@@ -427,7 +431,8 @@ function firstHelp(){
 			}, 500);
 
 			gridOfUser[incorrectCells[randomIndex][0]][incorrectCells[randomIndex][1]] = 0;
-			firstHNum++;
+			firstHNum--;
+				document.getElementById('help1').innerHTML = firstHNum.toString();
 		}
 	}
 	else alert("There are no first helps!");
@@ -437,7 +442,7 @@ function firstHelp(){
  * Показывает клетку, котоорая должна быть закрашена
  */
 function secondHelp(){
-	if (secondHNum != 3){
+	if (secondHNum != 0){
 		var correctCells = [], k = 0;
 
 		/**
@@ -500,7 +505,8 @@ function secondHelp(){
 			}, 500);
 
 			gridOfUser[correctCells[randomIndex][0]][correctCells[randomIndex][1]] = 1;
-			secondHNum++;
+			secondHNum--;
+			document.getElementById('help2').innerHTML = secondHNum.toString();
 		}
 	}
 	else alert("There are no second helps!");
