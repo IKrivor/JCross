@@ -39,6 +39,10 @@ var secondHNum = 3;
 var xPrevCell = 0;
 var yPrevCell = 0;
 var leftBlock = [];
+var topBlock = [];
+var leftCanvas;
+var leftContext;
+var topContext;
 
 
 /**
@@ -119,13 +123,13 @@ function drawVertLines(context, width, height){
  * Рисует левый блок с цифрами
  */
 function drawLeft(){
-	var leftCanvas = document.getElementById("leftOfGrid");
+	leftCanvas = document.getElementById("leftOfGrid");
 	var countOfCells = 0;
 	var	max = 0;
 	var timer = setInterval(function(){
 
 		for (var i = 0; i < matrixOfPicture.length; i++){
-
+		//console.log("i" + i);
 			if (countOfCells > max) max = countOfCells;
 
 			countOfCells = 0;
@@ -133,13 +137,16 @@ function drawLeft(){
 			for (var j = 0; j < matrixOfPicture[0].length; j++){
 
 				if (matrixOfPicture[i][j] == 1){
+					//console.log("j" + j);
 					countOfCells++;
 					j++;
 
 					if (j != matrixOfPicture[0].length){
 
 						while(matrixOfPicture[i][j] == 1){
-							j++;
+							if (j != matrixOfPicture[0].length) j++;
+							//console.log("j!" + j);
+							else break;
 						}
 
 					}
@@ -150,6 +157,7 @@ function drawLeft(){
 
 		leftCanvas.width = max * 20 + 1;
 		leftCanvas.height = matrixOfPicture.length * 20 + 1;
+		leftCanvas.style.background = "#FFF3D7";
 		countOfCells = 0;
 
 		for (var i = 0; i < matrixOfPicture.length; i++) {
@@ -187,13 +195,13 @@ function drawLeft(){
 			}
 		}
 
-		var leftContex = leftCanvas.getContext("2d");
+		leftContext = leftCanvas.getContext("2d");
 
-		drawHorizLines(leftContex, leftCanvas.width, leftCanvas.height);
-		drawVertLines(leftContex, leftCanvas.width, leftCanvas.height);
-		leftContex.stroke();
-		leftContex.font = "bold 12px sans-serif";
-		leftContex.textBaseline = "top";
+		drawHorizLines(leftContext, leftCanvas.width, leftCanvas.height);
+		drawVertLines(leftContext, leftCanvas.width, leftCanvas.height);
+		leftContext.stroke();
+		leftContext.font = "bold 12px sans-serif";
+		leftContext.textBaseline = "top";
 
 		var a = 5, b = 5;
 
@@ -204,7 +212,7 @@ function drawLeft(){
 				b = 5 + (20*j);
 
 				if (leftBlock[j][i] != 0){
-					leftContex.fillText(leftBlock[j][i], a, b);
+					leftContext.fillText(leftBlock[j][i], a, b);
 				}
 
 			}
@@ -218,38 +226,121 @@ function drawLeft(){
  * Рисует верхний блок с цифрами
  */
 function drawTop(){
-	var ultop = [
-		[0,0,0,0,0,0,0,0,2,2,0,0,0,0,0],
-		[3,3,0,0,0,0,0,3,4,2,3,0,3,0,0],
-		[1,1,8,5,2,7,9,3,2,4,4,9,2,1,1]
-	];
-	var ultx = 3, ulty = 15;
 	var topCanvas = document.getElementById("topOfGrid");
-	var topContext = topCanvas.getContext("2d");
+	topContext = topCanvas.getContext("2d");
+	var countOfCells = 0;
+	var	max = 0;
 
-	topCanvas.width = 301;
-	topCanvas.height = 61;
-	drawVertLines(topContext, topCanvas.width, topCanvas.height);
-	drawHorizLines(topContext, topCanvas.width, topCanvas.height);
-	topContext.stroke();
-	topContext.font = "bold 12px sans-serif";
-	topContext.textBaseline = "top";
+	var timer = setInterval(function(){
+		for (var i = 0; i < matrixOfPicture[0].length; i++){
+			//console.log("i" + i);
+			if (countOfCells > max) max = countOfCells;
 
-	var a = 7, b = 5;
+			countOfCells = 0;
 
-	for (var i = 0; i < ulty; i++) {
-		a = 5 + (20*i);
+			for (var j = 0; j < matrixOfPicture.length; j++){
 
-		for (var j = 0; j < ultx; j++) {
-			b = 5 + (20*j);
+				if (matrixOfPicture[j][i] == 1){
+					//console.log("i" + i);
+					//console.log("j!" + j);
+					countOfCells++;
+					j++;
 
-			if (ultop[j][i] != 0){
-				topContext.fillText(ultop[j][i], a, b);
+					if (j != matrixOfPicture.length){
+
+						while(matrixOfPicture[j][i] == 1){
+							if (j != matrixOfPicture.length - 1) {
+								//console.log("j" + j);
+								j++;
+							} else break;
+
+							//console.log("j!" + j);
+						}
+
+					}
+
+				}
+			}
+		}
+		console.log(max);
+		countOfCells = 0;
+
+		topCanvas.width = matrixOfPicture[0].length * 20 + 1;
+		topCanvas.height = max * 20 + 1;
+
+		topCanvas.width = 301;
+		topCanvas.height = 61;
+
+		for (var i = 0; i < max; i++) {
+			topBlock[i] = [];
+
+			for (var j = 0; j < matrixOfPicture[0].length; j++)
+				topBlock[i][j] = 0;
+		}
+
+		//console.log(topBlock);
+
+		var k = max - 1;
+
+		for (var i = 0; i < matrixOfPicture[0].length; i++) {
+			k = max - 1;
+
+			for (var j = matrixOfPicture.length - 1; j >= 0; j--) {
+
+				if (matrixOfPicture[j][i] == 1){
+					countOfCells++;
+					j--;
+
+					if (j != -1){
+
+						while(matrixOfPicture[j][i] == 1){
+							if (j != 0) {
+								countOfCells++;
+								j--;
+							}else {
+								countOfCells++;
+								break;
+							}
+
+						}
+
+					}
+
+					if (j != 0) j++;
+					topBlock[k][i] = countOfCells;
+					k--;
+					countOfCells = 0;
+				}
+			}
+		}
+		console.log(topBlock);
+
+		drawVertLines(topContext, topCanvas.width, topCanvas.height);
+		drawHorizLines(topContext, topCanvas.width, topCanvas.height);
+		topContext.stroke();
+		topContext.font = "bold 12px sans-serif";
+		topContext.textBaseline = "top";
+
+		var a = 5, b = 5;
+
+		for (var i = 0; i < matrixOfPicture[0].length; i++) {
+			a = 5 + (20*i);
+
+			for (var j = 0; j < max; j++) {
+				b = 5 + (20*j);
+
+				if (topBlock[j][i] != 0){
+					topContext.fillText(topBlock[j][i], a, b);
+				}
+
 			}
 
 		}
 
-	}
+		clearInterval(timer);
+	}, 2);
+
+
 }
 
 /**
@@ -299,9 +390,16 @@ function cellOnClick(e) {
 		drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
 		drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
 		bodyContext.stroke();
+
+		var resultOfCompare = compareMatrix(matrixOfPicture, gridOfUser);
+
+		if (resultOfCompare == true) alert("Right!");
+
 		clearInterval(timer);
 	}, 100);
 }
+
+
 
 /**
  * Выделяет клетку, на которую наведен курсор
@@ -319,6 +417,11 @@ function cellMouseMove(e) {
 		bodyContext.fillRect(xPrevCell * 20 + 1, yPrevCell * 20 + 1, 19, 19);
 		bodyContext.stroke();
 	}
+
+	//leftContext.strokeStyle = "#FFF3D7";
+	//leftContext.strokeRect(2, yPrevCell * 20 + 2, leftBlock[0].length * 20 - 3, 17);
+	//drawHorizLines(leftContext, leftCanvas.width, leftCanvas.height);
+	//drawVertLines(leftContext, leftCanvas.width, leftCanvas.height);
 
 	x = (e.pageX - bodyCanvas.offsetLeft) / 20 | 0;
 	y = (e.pageY - bodyCanvas.offsetTop) / 20 | 0;
@@ -342,6 +445,14 @@ function cellMouseMove(e) {
 		xPrevCell = x;
 		yPrevCell = y;
 	}
+
+	//leftContext.strokeStyle = "#FF6347";
+	//leftContext.strokeRect(2, y * 20 + 2, leftBlock[0].length * 20 - 3, 17);
+	//var timer = setInterval(function(){
+	//	drawHorizLines(leftContext, leftCanvas.width, leftCanvas.height);
+	//	clearInterval(timer);
+	//}, 2);
+
 }
 
 /**
@@ -442,7 +553,7 @@ function firstHelp(){
 }
 
 /**
- * Показывает клетку, котоорая должна быть закрашена
+ * Показывает клетку, которая должна быть закрашена
  */
 function secondHelp(){
 	if (secondHNum != 0){
