@@ -2,32 +2,6 @@ App.controller('GeneratorCtrl', ['$scope', '$mdSidenav', function($scope){
 
 	var actionLeft1 = true,
 		actionRight1 = false;
-	//var w = 15, h = 10, cell = 20;
-
-
-	////в верхнем блоке
-	//function tblock(){
-	//	var th = document.getElementById("th");
-	//	var   count = 0,
-	//		max = 0;
-	//	for (var j = 0; j < w; j++){
-	//		if (count > max)
-	//			max = count;
-	//		count = 0;
-	//		for (var i = 0; i < h; i++){
-	//			if (ulitka[i][j] == 1){
-	//				count++;
-	//				i++;
-	//				if (i != 10){
-	//					while(ulitka[i][j] == 1){
-	//						i++;
-	//					}
-	//				}
-	//			}
-	//		}
-	//	}
-	//	th.height = cell * max;
-	//}
 }]);
 
 var matrixOfPicture = [];
@@ -46,10 +20,27 @@ var topContext;
 
 
 /**
- * Cчитывает матрицу картинки из файла json
+ * Cчитывает матрицу картинки улитки из файла json
  */
 function readMatrixOfPict(){
 	$.getJSON("document.json", function(json){
+		for (var i = 0; i < json.matrix.length; i++){
+			matrixOfPicture[i] = [];
+			gridOfUser[i] = [];
+			for (var j = 0; j < json.matrix[0].length; j++){
+				matrixOfPicture[i][j] = json.matrix[i][j];
+				gridOfUser[i][j] = 0;
+			}
+
+		}
+	});
+}
+
+/**
+ * Cчитывает матрицу картинки белки из файла json
+ */
+function readMatrixOfPict2(){
+	$.getJSON("belka.json", function(json){
 		for (var i = 0; i < json.matrix.length; i++){
 			matrixOfPicture[i] = [];
 			gridOfUser[i] = [];
@@ -263,13 +254,14 @@ function drawTop(){
 			}
 		}
 		console.log(max);
+		console.log(matrixOfPicture[0].length);
 		countOfCells = 0;
 
 		topCanvas.width = matrixOfPicture[0].length * 20 + 1;
 		topCanvas.height = max * 20 + 1;
 
-		topCanvas.width = 301;
-		topCanvas.height = 61;
+		//topCanvas.width = 301;
+		//topCanvas.height = 61;
 
 		for (var i = 0; i < max; i++) {
 			topBlock[i] = [];

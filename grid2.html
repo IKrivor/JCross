@@ -1,4 +1,4 @@
-﻿<html lang="en" ng-app="PaperGenerator">
+<html lang="en" ng-app="PaperGenerator">
 <head>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
@@ -24,8 +24,8 @@
 <script src="apps/GeneratorCtrl.js"></script>
 
 <div layout="row" layout-align="center center">
-    <div layout="column" style="margin-top: 10mm;">
-        <div layout="row" layout-align="center end" style="padding-top: 20mm;">
+    <div layout="column" style="margin-top: 5mm; margin-bottom: 20mm;">
+        <div layout="row" layout-align="center end" >
             <canvas id = "leftOfGrid"    class="canvas">
                 <script>
                     drawLeft();
@@ -39,7 +39,7 @@
                 </script>
                 <canvas id = "bodyOfGrid"  style="background: white;" class="canvas"></canvas>
                 <script>
-                    readMatrixOfPict();
+                    readMatrixOfPict2();
                     drawBody();
                 </script>
             </div>
