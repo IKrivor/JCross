@@ -471,8 +471,8 @@ function compareMatrix( matrix, grid ){
 function checkGrid(){
 	var resultOfCompare = compareMatrix(matrixOfPicture, gridOfUser);
 
-	if (resultOfCompare == true) alert("Right!");
-	else alert("Wrong!");
+	if (resultOfCompare == true) alert("Правильно!");
+	else alert("Неправильно!");
 }
 
 /**
