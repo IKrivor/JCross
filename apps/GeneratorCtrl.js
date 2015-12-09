@@ -13,11 +13,13 @@ var secondHNum = 3;
 var xPrevCell = 0;
 var yPrevCell = 0;
 var leftBlock = [];
+var leftBlClick = [];
+var topBlClick = [];
 var topBlock = [];
 var leftCanvas;
+var topCanvas;
 var leftContext;
 var topContext;
-
 
 /**
  * Cчитывает матрицу картинки улитки из файла json
@@ -54,6 +56,23 @@ function readMatrixOfPict2(){
 }
 
 /**
+ * Cчитывает матрицу картинки панды из файла json
+ */
+function readMatrixOfPict3(){
+	$.getJSON("panda.json", function(json){
+		for (var i = 0; i < json.matrix.length; i++){
+			matrixOfPicture[i] = [];
+			gridOfUser[i] = [];
+			for (var j = 0; j < json.matrix[0].length; j++){
+				matrixOfPicture[i][j] = json.matrix[i][j];
+				gridOfUser[i][j] = 0;
+			}
+
+		}
+	});
+}
+
+/**
  * Рисует горизонтальные линии на игровом поле
  *
  * @param context Контекст канваса, на котором будет рисоваться
@@ -62,6 +81,9 @@ function readMatrixOfPict2(){
  */
 function drawHorizLines(context, width, height){
 	var thickLinesCount = 0;
+
+	context.lineWidth = 1;
+	context.strokeStyle = "black";
 
 	for (var y = 0.5; y < height; y += 20) {
 
@@ -91,6 +113,9 @@ function drawHorizLines(context, width, height){
 function drawVertLines(context, width, height){
 	var thickLinesCount = 0;
 
+	context.lineWidth = 1;
+	context.strokeStyle = "black";
+
 	for (var x = 0.5; x < width; x += 20) {
 
 		if (thickLinesCount != 5){
@@ -115,12 +140,13 @@ function drawVertLines(context, width, height){
  */
 function drawLeft(){
 	leftCanvas = document.getElementById("leftOfGrid");
+
 	var countOfCells = 0;
 	var	max = 0;
 	var timer = setInterval(function(){
 
 		for (var i = 0; i < matrixOfPicture.length; i++){
-		//console.log("i" + i);
+
 			if (countOfCells > max) max = countOfCells;
 
 			countOfCells = 0;
@@ -128,7 +154,6 @@ function drawLeft(){
 			for (var j = 0; j < matrixOfPicture[0].length; j++){
 
 				if (matrixOfPicture[i][j] == 1){
-					//console.log("j" + j);
 					countOfCells++;
 					j++;
 
@@ -136,7 +161,6 @@ function drawLeft(){
 
 						while(matrixOfPicture[i][j] == 1){
 							if (j != matrixOfPicture[0].length) j++;
-							//console.log("j!" + j);
 							else break;
 						}
 
@@ -153,9 +177,13 @@ function drawLeft(){
 
 		for (var i = 0; i < matrixOfPicture.length; i++) {
 			leftBlock[i] = [];
+			leftBlClick[i] = [];
 
-			for (var j = 0; j < max; j++)
+			for (var j = 0; j < max; j++) {
 				leftBlock[i][j] = 0;
+				leftBlClick[i][j] = 0;
+			}
+
 		}
 
 		var k = max - 1;
@@ -209,18 +237,21 @@ function drawLeft(){
 			}
 
 		}
+
 		clearInterval(timer);
 	},2);
+	leftCanvas.addEventListener("click", leftDigitOnClick, false);
 }
 
 /**
  * Рисует верхний блок с цифрами
  */
 function drawTop(){
-	var topCanvas = document.getElementById("topOfGrid");
-	topContext = topCanvas.getContext("2d");
+	topCanvas = document.getElementById("topOfGrid");
 	var countOfCells = 0;
 	var	max = 0;
+
+	topContext = topCanvas.getContext("2d");
 
 	var timer = setInterval(function(){
 		for (var i = 0; i < matrixOfPicture[0].length; i++){
@@ -232,8 +263,6 @@ function drawTop(){
 			for (var j = 0; j < matrixOfPicture.length; j++){
 
 				if (matrixOfPicture[j][i] == 1){
-					//console.log("i" + i);
-					//console.log("j!" + j);
 					countOfCells++;
 					j++;
 
@@ -241,11 +270,8 @@ function drawTop(){
 
 						while(matrixOfPicture[j][i] == 1){
 							if (j != matrixOfPicture.length - 1) {
-								//console.log("j" + j);
 								j++;
 							} else break;
-
-							//console.log("j!" + j);
 						}
 
 					}
@@ -253,24 +279,21 @@ function drawTop(){
 				}
 			}
 		}
-		console.log(max);
-		console.log(matrixOfPicture[0].length);
 		countOfCells = 0;
 
 		topCanvas.width = matrixOfPicture[0].length * 20 + 1;
 		topCanvas.height = max * 20 + 1;
 
-		//topCanvas.width = 301;
-		//topCanvas.height = 61;
-
 		for (var i = 0; i < max; i++) {
 			topBlock[i] = [];
+			topBlClick[i] = [];
 
-			for (var j = 0; j < matrixOfPicture[0].length; j++)
+			for (var j = 0; j < matrixOfPicture[0].length; j++) {
 				topBlock[i][j] = 0;
-		}
+				topBlClick[i][j] = 0;
+			}
 
-		//console.log(topBlock);
+		}
 
 		var k = max - 1;
 
@@ -305,7 +328,6 @@ function drawTop(){
 				}
 			}
 		}
-		console.log(topBlock);
 
 		drawVertLines(topContext, topCanvas.width, topCanvas.height);
 		drawHorizLines(topContext, topCanvas.width, topCanvas.height);
@@ -331,18 +353,19 @@ function drawTop(){
 
 		clearInterval(timer);
 	}, 2);
-
-
+	topCanvas.addEventListener("click", topDigitOnClick, false);
 }
 
 /**
  * Рисует основное поле
  */
 function drawBody(){
+
 	document.addEventListener( "DOMContentLoaded", function() {
 		document.getElementById('help1').innerHTML = firstHNum.toString();
 		document.getElementById('help2').innerHTML = secondHNum.toString();
 	}, false );
+
 	var timer = setInterval(function(){
 		bodyCanvas = document.getElementById("bodyOfGrid");
 		bodyCanvas.width = matrixOfPicture[0].length * 20 + 1;
@@ -355,7 +378,6 @@ function drawBody(){
 		bodyCanvas.addEventListener("mousemove", cellMouseMove, false);
 		clearInterval(timer);
 	},2)
-
 }
 
 /**
@@ -383,6 +405,8 @@ function cellOnClick(e) {
 		drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
 		bodyContext.stroke();
 
+		//crossOutDigitY(y);
+
 		var resultOfCompare = compareMatrix(matrixOfPicture, gridOfUser);
 
 		if (resultOfCompare == true) alert("Right!");
@@ -390,8 +414,6 @@ function cellOnClick(e) {
 		clearInterval(timer);
 	}, 100);
 }
-
-
 
 /**
  * Выделяет клетку, на которую наведен курсор
@@ -620,4 +642,82 @@ function secondHelp(){
 		}
 	}
 }
+
+/**
+ * Зачеркивает цифры на левом поле
+ */
+function leftDigitOnClick(e){
+	var x = (e.pageX - leftCanvas.offsetLeft) / 20 | 0;
+	var y = (e.pageY - leftCanvas.offsetTop) / 20 | 0;
+
+	if (leftBlock[y][x] != 0) {
+		if (leftBlClick[y][x] == 0) {
+			leftContext.beginPath();
+			leftContext.lineWidth = 2;
+			leftContext.strokeStyle = "#FF6347";
+			leftContext.moveTo(x * 20 + 1, y * 20 + 1);
+			leftContext.lineTo(x * 20 + 20, y * 20 + 20);
+			leftContext.stroke();
+			leftContext.moveTo(x * 20 + 20, y * 20 + 1);
+			leftContext.lineTo(x * 20 + 1, y * 20 + 20);
+			leftContext.stroke();
+			leftContext.beginPath();
+			drawHorizLines(leftContext, leftCanvas.width, leftCanvas.height);
+			drawVertLines(leftContext, leftCanvas.width, leftCanvas.height);
+			leftContext.stroke();
+			leftBlClick[y][x] = 1;
+		} else {
+			leftContext.fillStyle = "#fff3d7";
+			leftContext.fillRect(x * 20, y * 20, 20, 20);
+			leftContext.stroke();
+			leftContext.fillStyle = "black";
+			leftContext.fillText(leftBlock[y][x], x * 20 + 5, y * 20 + 5);
+			drawHorizLines(leftContext, leftCanvas.width, leftCanvas.height);
+			drawVertLines(leftContext, leftCanvas.width, leftCanvas.height);
+			leftContext.stroke();
+			leftBlClick[y][x] = 0;
+		}
+	}
+
+}
+
+/**
+ * Зачеркивает цифры на правом поле
+ */
+function topDigitOnClick(e){
+	var x = (e.pageX - topCanvas.offsetLeft) / 20 | 0;
+	var y = (e.pageY - topCanvas.offsetTop) / 20 | 0;
+
+	if (topBlock[y][x] != 0) {
+		if (topBlClick[y][x] == 0) {
+			topContext.beginPath();
+			topContext.lineWidth = 2;
+			topContext.strokeStyle = "#FF6347";
+			topContext.moveTo(x * 20 + 1, y * 20 + 1);
+			topContext.lineTo(x * 20 + 20, y * 20 + 20);
+			topContext.stroke();
+			topContext.moveTo(x * 20 + 20, y * 20 + 1);
+			topContext.lineTo(x * 20 + 1, y * 20 + 20);
+			topContext.stroke();
+			topContext.beginPath();
+			drawHorizLines(topContext, topCanvas.width, topCanvas.height);
+			drawVertLines(topContext, topCanvas.width, topCanvas.height);
+			topContext.stroke();
+			topBlClick[y][x] = 1;
+		} else {
+			topContext.fillStyle = "#fff3d7";
+			topContext.fillRect(x * 20, y * 20, 20, 20);
+			topContext.stroke();
+			topContext.fillStyle = "black";
+			topContext.fillText(topBlock[y][x], x * 20 + 5, y * 20 + 5);
+			drawHorizLines(topContext, topCanvas.width, topCanvas.height);
+			drawVertLines(topContext, topCanvas.width, topCanvas.height);
+			topContext.stroke();
+			topBlClick[y][x] = 0;
+		}
+	}
+
+}
+
+
 
