@@ -1,0 +1,95 @@
+//function crossOutDigitY (y) {
+//	var cellsCount = 0;
+//	var emptyNum = 0;
+//	var countOfCells = 0;
+//	var maxCelInLine = 0;
+//
+//	for (var g = matrixOfPicture[0].length - 1; g >= 0; g--) {
+//		if (matrixOfPicture[y][g] == 1) {
+//			countOfCells++;
+//			g--;
+//			if (g != -1) {
+//				while(matrixOfPicture[y][g] == 1) {
+//					if (g != 0)
+//						g--;
+//					else break;
+//				}
+//				if (g != 0) g++;
+//			}
+//		}
+//		if (countOfCells > maxCelInLine) maxCelInLine = countOfCells;
+//	}
+//
+//	for (var i = gridOfUser[0].length; i >= 0; i--) {
+//		if (i == 0 && emptyNum == gridOfUser[0].length) {
+//			for (var k = leftBlock[0].length - 1; k >= 0; k--) {
+//				if (leftBlock[y][k] != 0) {
+//					leftContext.fillStyle = "#fff3d7";
+//					leftContext.fillRect(k * 20, y * 20, 20, 20);
+//					leftContext.stroke();
+//					leftContext.fillStyle = "black";
+//					leftContext.fillText(leftBlock[y][k], k * 20 + 5, y * 20 + 5);
+//					drawHorizLines(leftContext, leftCanvas.width, leftCanvas.height);
+//					drawVertLines(leftContext, leftCanvas.width, leftCanvas.height);
+//				}
+//			}
+//		}
+//		if (gridOfUser[y][i] == 1) {
+//			cellsCount++;
+//			i--;
+//			if (i != -1){
+//
+//				while(gridOfUser[y][i] == 1){
+//					if (i != 0) {
+//						cellsCount++;
+//						i--;
+//					}else {
+//						cellsCount++;
+//						break;
+//					}
+//
+//				}
+//
+//			}
+//
+//			if (i != 0) i++;
+//
+//			//console.log(cellsCount);
+//
+//			for (var j = leftBlock[0].length - 1; j >= 0; j--) {
+//				if (leftBlock[y][j] != 0) {
+//					if (leftBlock[y][j] == cellsCount) {
+//						console.log("!");
+//						leftContext.beginPath();
+//						leftContext.lineWidth = 2;
+//						leftContext.strokeStyle = "#FF6347";
+//						leftContext.moveTo(j * 20 + 1, y * 20 + 1);
+//						leftContext.lineTo(j * 20 + 20, y * 20 + 20);
+//						leftContext.stroke();
+//						leftContext.moveTo(j * 20 + 20, y * 20 + 1);
+//						leftContext.lineTo(j * 20 + 1, y * 20 + 20);
+//						leftContext.stroke();
+//						leftContext.beginPath();
+//						drawHorizLines(leftContext, leftCanvas.width, leftCanvas.height);
+//						drawVertLines(leftContext, leftCanvas.width, leftCanvas.height);
+//						leftContext.stroke();
+//						console.log("!!");
+//						maxCelInLine--;
+//					} else {
+//						leftContext.fillStyle = "#fff3d7";
+//						leftContext.fillRect(j * 20, y * 20, 20, 20);
+//						leftContext.stroke();
+//						leftContext.fillStyle = "black";
+//						leftContext.fillText(leftBlock[y][j], j * 20 + 5, y * 20 + 5);
+//						drawHorizLines(leftContext, leftCanvas.width, leftCanvas.height);
+//						drawVertLines(leftContext, leftCanvas.width, leftCanvas.height);
+//						console.log("!!!");
+//					}
+//				}
+//
+//			}
+//
+//			cellsCount = 0;
+//		} else emptyNum++;
+//	}
+//}
