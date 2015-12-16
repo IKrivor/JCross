@@ -399,7 +399,7 @@ function cellOnClick(e) {
 
 		var resultOfCompare = compareMatrix(matrixOfPicture, gridOfUser);
 
-		if (resultOfCompare == true) alert("Right!");
+		if (resultOfCompare == true) victoryShow();
 
 		clearInterval(timer);
 	}, 100);
@@ -421,11 +421,6 @@ function cellMouseMove(e) {
 		bodyContext.fillRect(xPrevCell * 20 + 1, yPrevCell * 20 + 1, 19, 19);
 		bodyContext.stroke();
 	}
-
-	//leftContext.strokeStyle = "#FFF3D7";
-	//leftContext.strokeRect(2, yPrevCell * 20 + 2, leftBlock[0].length * 20 - 3, 17);
-	//drawHorizLines(leftContext, leftCanvas.width, leftCanvas.height);
-	//drawVertLines(leftContext, leftCanvas.width, leftCanvas.height);
 
 	x = (e.pageX - bodyCanvas.offsetLeft) / 20 | 0;
 	y = (e.pageY - bodyCanvas.offsetTop) / 20 | 0;
@@ -449,13 +444,6 @@ function cellMouseMove(e) {
 		xPrevCell = x;
 		yPrevCell = y;
 	}
-
-	//leftContext.strokeStyle = "#FF6347";
-	//leftContext.strokeRect(2, y * 20 + 2, leftBlock[0].length * 20 - 3, 17);
-	//var timer = setInterval(function(){
-	//	drawHorizLines(leftContext, leftCanvas.width, leftCanvas.height);
-	//	clearInterval(timer);
-	//}, 2);
 
 }
 
@@ -483,7 +471,7 @@ function compareMatrix( matrix, grid ){
 function checkGrid(){
 	var resultOfCompare = compareMatrix(matrixOfPicture, gridOfUser);
 
-	if (resultOfCompare == true) alert("Правильно!");
+	if (resultOfCompare == true) victoryShow();
 	else {
 		messageSend("Решено неверно!");
 	}
@@ -556,10 +544,12 @@ function firstHelp(){
 			document.getElementById('help1but').style.fontWeight = 'bold';
 			document.getElementById('help1but').style.fontSize = '20pt';
 			document.getElementById('help1but').innerHTML = firstHNum.toString();
+
 			if (firstHNum == 0) {
 					document.getElementById('help1but').style.background = '#808080';
 					document.getElementById('help1but').style.cursor = 'pointer';
 			}
+
 		}
 	}
 }
@@ -634,6 +624,7 @@ function secondHelp(){
 
 			gridOfUser[correctCells[randomIndex][0]][correctCells[randomIndex][1]] = 1;
 			secondHNum--;
+
 			if (secondHNum == 0) {
 				document.getElementById('help2but').style.background = '#808080';
 				document.getElementById('help2but').style.cursor = 'pointer';
@@ -735,9 +726,9 @@ function messageSend (message){
 	var pulseCount = 0;
 	var timer = setInterval(function(){
 		if (pulseCount == 0) {
-			document.getElementById('message1').style.fontSize = '14pt';
+			document.getElementById('message1').style.fontSize = '17pt';
 			document.getElementById('message1').style.textTransform = 'uppercase';
-			document.getElementById('message1').style.color = '#B22222';
+			document.getElementById('message1').style.color = '#FF6347';
 			document.getElementById('message1').innerHTML = message;
 			pulseCount++;
 		}else if (pulseCount != 4) {
@@ -749,5 +740,15 @@ function messageSend (message){
 	}, 500);
 }
 
-
-
+/**
+ * Выводит сообщение о победе в див над кроссвордом
+ */
+function victoryShow(){
+	var timer = setInterval(function(){
+		document.getElementById('message1').style.fontSize = '40pt';
+		document.getElementById('message1').style.textTransform = 'uppercase';
+		document.getElementById('message1').style.color = '#FF6347';
+		document.getElementById('message1').innerHTML = "Поздравляем!!!";
+		clearInterval(timer);
+	}, 500);
+}
