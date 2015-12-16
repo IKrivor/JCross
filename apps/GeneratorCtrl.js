@@ -384,13 +384,10 @@ function drawBody(){
  *Закрашивает или стирает клетку по клику мыши
  */
 function cellOnClick(e) {
-	var x = 0;
-	var y = 0;
+	var x = (e.pageX - bodyCanvas.offsetLeft) / 20 | 0;
+	var y = (e.pageY - bodyCanvas.offsetTop) / 20 | 0;
 
 	var timer = setInterval(function(){
-		x = (e.pageX - bodyCanvas.offsetLeft) / 20 | 0;
-		y = (e.pageY - bodyCanvas.offsetTop) / 20 | 0;
-
 		if (gridOfUser[y][x] == 0){
 			bodyContext.fillStyle = "black";
 			gridOfUser[y][x] = 1;
@@ -404,8 +401,6 @@ function cellOnClick(e) {
 		drawHorizLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
 		drawVertLines(bodyContext, bodyCanvas.width, bodyCanvas.height);
 		bodyContext.stroke();
-
-		//crossOutDigitY(y);
 
 		var resultOfCompare = compareMatrix(matrixOfPicture, gridOfUser);
 
@@ -494,7 +489,9 @@ function checkGrid(){
 	var resultOfCompare = compareMatrix(matrixOfPicture, gridOfUser);
 
 	if (resultOfCompare == true) alert("Правильно!");
-	else alert("Неправильно!");
+	else {
+		messageSend("Решено неверно!");
+	}
 }
 
 /**
@@ -533,7 +530,9 @@ function firstHelp(){
 		}
 		var randomIndex = incorCellPick(matrixOfPicture, gridOfUser);
 
-		if (randomIndex == -1) alert("All cells are correct!");
+		if (randomIndex == -1) {
+			messageSend("Все клетки верны!");
+		}
 		else {
 			var pulseCount = 0, colorCh = 1;
 			var timer = setInterval(function(){
@@ -602,7 +601,9 @@ function secondHelp(){
 		}
 		var randomIndex = corCellPick(matrixOfPicture, gridOfUser);
 
-		if (randomIndex == -1) alert("All the correct cells are painted!");
+		if (randomIndex == -1) {
+			messageSend("Все правильные клетки закрашены!");
+		}
 		else {
 			var pulseCount = 0, colorCh = 1;
 			var timer = setInterval(function(){
@@ -682,7 +683,7 @@ function leftDigitOnClick(e){
 }
 
 /**
- * Зачеркивает цифры на правом поле
+ * Зачеркивает цифры на верхнем поле
  */
 function topDigitOnClick(e){
 	var x = (e.pageX - topCanvas.offsetLeft) / 20 | 0;
@@ -716,7 +717,28 @@ function topDigitOnClick(e){
 			topBlClick[y][x] = 0;
 		}
 	}
+}
 
+/**
+ * Ваводит сообщение в див над кроссвордом
+ * @param message Текст сообщения
+ */
+function messageSend (message){
+	var pulseCount = 0;
+	var timer = setInterval(function(){
+		if (pulseCount == 0) {
+			document.getElementById('message1').style.fontSize = '14pt';
+			document.getElementById('message1').style.textTransform = 'uppercase';
+			document.getElementById('message1').style.color = '#B22222';
+			document.getElementById('message1').innerHTML = message;
+			pulseCount++;
+		}else if (pulseCount != 4) {
+			pulseCount++;
+		}else {
+			document.getElementById('message1').innerHTML = "";
+			clearInterval(timer);
+		}
+	}, 500);
 }
 
 

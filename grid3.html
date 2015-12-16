@@ -24,42 +24,46 @@
 <script src="apps/GeneratorCtrl.js"></script>
 
 <div layout="row" layout-align="center center">
-    <div layout="column" style="margin-top: 5mm; margin-bottom: 20mm;">
-        <div layout="row" layout-align="center end" >
-            <canvas id = "leftOfGrid"    class="canvas">
-                <script>
-                    drawLeft();
-                </script>
-            </canvas>
+    <div layout="column"  style="margin-top: 10mm; margin-bottom: 20mm;">
+        <div layout="column" layout-align="center center">
+            <div id="message1" ></div>
+            <div layout="row" layout-align="center end" style="padding-top: 10mm;">
+                <canvas id = "leftOfGrid"    class="canvas">
+                    <script>
+                        drawLeft();
+                    </script>
+                </canvas>
 
-            <div layout="column" layout-align="center end">
-                <canvas id = "topOfGrid"  style="background: #fff3d7;" class="canvas"></canvas>
-                <script>
-                    drawTop();
-                </script>
-                <canvas id = "bodyOfGrid"  style="background: white;" class="canvas"></canvas>
-                <script>
-                    readMatrixOfPict3();
-                    drawBody();
-                </script>
+                <div layout="column" layout-align="center end">
+                    <canvas id = "topOfGrid"  style="background: #fff3d7;" class="canvas"></canvas>
+                    <script>
+                        drawTop();
+                    </script>
+                    <canvas id = "bodyOfGrid"  style="background: white;" class="canvas"></canvas>
+                    <script>
+                        readMatrixOfPict3();
+                        drawBody();
+                    </script>
+                </div>
+
             </div>
-
         </div>
-        <div layout="row" layout-align="space-around center" >
+
+        <div layout="row" layout-align="space-around center" style="padding-top: 2mm;" >
             <div layout="row">
-                <div  id="help1but" onclick="firstHelp()" layout="row" layout-align="center center" style="padding-top: 1mm;">
-                    <a class="help" href="#"><img src="design/2подсказка.png" style="width: 10mm; height: 10mm;"alt="подсказка"><span class="airhelp">Показать неправильную клетку</span></a>
+                <div class="circle" id="help1but" onclick="firstHelp()" layout="row" layout-align="center center" style="padding-top: 1mm;">
+                    <a class="help" href="#"><img src="design/символ2.png" style="width: 6mm; height: 6mm; padding-left: 2mm; padding-top: 4px;" alt="подсказка"><span class="airhelp">Показать неправильную клетку</span></a>
                 </div>
                 <div id="help1" style="padding-top: 3mm; padding-left: 2mm; font-size: large"></div>
             </div>
             <div layout="row">
-                <div  id="help2but" onclick="secondHelp()" layout="row" layout-align="center center" style="padding-top: 1mm;">
-                    <a class="help" href="#"><img src="design/1подсказка.png" style="width: 10mm; height: 10mm;" alt="подсказка"><span class="airhelp">Показать правильную клетку</span></a>
+                <div class="circle2" id="help2but" onclick="secondHelp()" layout="row" layout-align="center center" style="padding-top: 1mm;">
+                    <a class="help" href="#"><img src="design/символ 1.png" style="width: 6mm; height: 6mm; padding-left: 5px; padding-top: 1mm;" alt="подсказка"><span class="airhelp">Показать правильную клетку</span></a>
                 </div>
                 <div id="help2" style="padding-top: 3mm; padding-left: 2mm; font-size: large"></div>
             </div>
             <div  class="circle" onclick="checkGrid()" layout="row" layout-align="center center" style="padding-top: 2mm;">
-                <a class="help" href="#"><img src="design/галочка.png" style="width: 6mm; height: 6mm; padding-left: 2mm; " alt="подсказка"></a>
+                <a class="help" href="#"><img src="design/галочка.png" style="width: 6mm; height: 6mm; padding-left: 2mm; " alt="подсказка"><span class="airhelp">Проверить решение</span></a>
             </div>
         </div>
     </div>
