@@ -22,6 +22,19 @@ body{background-color: whitesmoke; height: auto;}
 	cursor: hand;
 }
 
+.circle2{
+	position: relative;
+	z-index: 1;
+	display: inline-block;
+	width: 10mm;
+	height: 10mm;
+	border-radius: 100%;
+	border: 2px solid #FF6347;
+	outline: none;
+	background: white;
+	cursor: hand;
+}
+
 .canvas{cursor: hand;}
 
 .groupX {
@@ -68,7 +81,7 @@ body{background-color: whitesmoke; height: auto;}
 	top: 25px;
 	z-index: 99;
 	margin-left: 0;
-	width: 200px; /*ширина блока подсказки*/
+	width: 180px; /*ширина блока подсказки*/
 }
 
 /*параметры изображения*/

@@ -361,11 +361,6 @@ function drawTop(){
  */
 function drawBody(){
 
-	document.addEventListener( "DOMContentLoaded", function() {
-		document.getElementById('help1').innerHTML = firstHNum.toString();
-		document.getElementById('help2').innerHTML = secondHNum.toString();
-	}, false );
-
 	var timer = setInterval(function(){
 		bodyCanvas = document.getElementById("bodyOfGrid");
 		bodyCanvas.width = matrixOfPicture[0].length * 20 + 1;
@@ -556,7 +551,11 @@ function firstHelp(){
 
 			gridOfUser[incorrectCells[randomIndex][0]][incorrectCells[randomIndex][1]] = 0;
 			firstHNum--;
-				document.getElementById('help1').innerHTML = firstHNum.toString();
+			document.getElementById('help1but').style.textAlign = 'center';
+			document.getElementById('help1but').style.color = 'white';
+			document.getElementById('help1but').style.fontWeight = 'bold';
+			document.getElementById('help1but').style.fontSize = '20pt';
+			document.getElementById('help1but').innerHTML = firstHNum.toString();
 			if (firstHNum == 0) {
 					document.getElementById('help1but').style.background = '#808080';
 					document.getElementById('help1but').style.cursor = 'pointer';
@@ -635,11 +634,20 @@ function secondHelp(){
 
 			gridOfUser[correctCells[randomIndex][0]][correctCells[randomIndex][1]] = 1;
 			secondHNum--;
-			document.getElementById('help2').innerHTML = secondHNum.toString();
 			if (secondHNum == 0) {
 				document.getElementById('help2but').style.background = '#808080';
 				document.getElementById('help2but').style.cursor = 'pointer';
+				document.getElementById('help2but').style.color = 'white';
+				document.getElementById('help2but').style.borderColor = '#808080';
+				document.getElementById('help2but').innerHTML = secondHNum.toString();
+			} else {
+				document.getElementById('help2but').style.textAlign = 'center';
+				document.getElementById('help2but').style.color = '#FF6347';
+				document.getElementById('help2but').style.fontWeight = 'bold';
+				document.getElementById('help2but').style.fontSize = '20pt';
+				document.getElementById('help2but').innerHTML = secondHNum.toString();
 			}
+
 		}
 	}
 }
