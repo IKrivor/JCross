@@ -59,14 +59,15 @@
             </div>
             <div layout="row">
                 <a class="help" href="#">
-                    <div class="circle2" id="help2but" onclick="secondHelp()" layout="row" layout-align="center center" style="padding-top: 1mm; vertical-align: top; text-align: center; font-size: 20pt;font-weight: bold; color: #FF6347;">
+                    <div class="circle2" id="help2but" onclick="secondHelp()" layout="row" layout-align="center center" style="vertical-align: top; text-align: center; font-size: 20pt;font-weight: bold; color: #FF6347;">
                         3
                     </div>
                     <span class="airhelp">Показать правильную клетку</span></a>
             </div>
-            <div  class="circle" onclick="checkGrid()" layout="row" layout-align="center center" style="padding-top: 2mm;">
-                <a class="help" href="#"><img src="design/галочка.png" style="width: 6mm; height: 6mm; padding-left: 2mm; " alt="подсказка"><span class="airhelp">Проверить решение</span></a>
-            </div>
+            <a class="help" href="#">
+                <div id="indic" style="color: #FF6347; font-size: 30pt; cursor: default;">✖
+                </div>
+                <span class="airhelp">Результат отгадывания</span></a>
         </div>
     </div>
 </div>

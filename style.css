@@ -48,13 +48,13 @@ body{background-color: whitesmoke; height: auto;}
 .md-button.left {
 	width: 40mm;
 	height: 5mm;
-	border-radius: 0 0 0 0;
+	border-radius: 20px;
 }
 
 .md-button.right {
 	width: 30mm;
 	height: 5mm;
-	border-radius: 0 0 0 0;
+	border-radius: 2px;
 }
 
 .logo{width: 85%; height: 102%;}
@@ -91,11 +91,16 @@ body{background-color: whitesmoke; height: auto;}
 
 /*блок всплывающей подсказки*/
 .airhelp {
+	cursor: default;
 	background: none repeat scroll 0 0 white; /*цвет и прозрачность фона*/
 	border: 1px solid #959595; /*параметры бордюра*/
 	border-radius: 5px; /*закругление углов*/
 	color: #959595; /*цвет шрифта всплывающей подсказки*/
 	padding: 5px; /*внутренний отступ*/
+}
+
+#indic{
+	cursor: pointer;
 }
 
 

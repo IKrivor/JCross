@@ -20,6 +20,7 @@ var leftCanvas;
 var topCanvas;
 var leftContext;
 var topContext;
+var resultOfCompare;
 
 /**
  * Cчитывает матрицу картинки улитки из файла json
@@ -469,9 +470,12 @@ function compareMatrix( matrix, grid ){
  * Проверяет правильность полученной картинки
  */
 function checkGrid(){
-	var resultOfCompare = compareMatrix(matrixOfPicture, gridOfUser);
+	resultOfCompare = compareMatrix(matrixOfPicture, gridOfUser);
 
-	if (resultOfCompare == true) victoryShow();
+	if (resultOfCompare == true) {
+
+		victoryShow();
+	}
 	else {
 		messageSend("Решено неверно!");
 	}
@@ -514,7 +518,13 @@ function firstHelp(){
 		var randomIndex = incorCellPick(matrixOfPicture, gridOfUser);
 
 		if (randomIndex == -1) {
-			messageSend("Все клетки верны!");
+			messageSend("Неверных клеток нет!");
+			firstHNum--;
+			document.getElementById('help1but').innerHTML = firstHNum.toString();
+			if (firstHNum == 0) {
+				document.getElementById('help1but').style.background = '#808080';
+				document.getElementById('help1but').style.cursor = 'pointer';
+			}
 		}
 		else {
 			var pulseCount = 0, colorCh = 1;
@@ -606,7 +616,7 @@ function secondHelp(){
 				} else {
 
 					if (colorCh == 1) {
-						bodyContext.fillStyle = "#72EE68";
+						bodyContext.fillStyle = "#FF6347";
 						colorCh = 2;
 						pulseCount++;
 					}
@@ -745,6 +755,8 @@ function messageSend (message){
  */
 function victoryShow(){
 	var timer = setInterval(function(){
+		document.getElementById('indic').style.color = '#72EE68';
+		document.getElementById('indic').innerHTML = "&#10003;";
 		document.getElementById('message1').style.fontSize = '40pt';
 		document.getElementById('message1').style.textTransform = 'uppercase';
 		document.getElementById('message1').style.color = '#FF6347';
